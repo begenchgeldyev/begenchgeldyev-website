@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1777744827015,
-      "tag": "0000_wandering_romulus",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1777744942890,
-      "tag": "0001_abnormal_tattoo",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1777745531244,
-      "tag": "0002_add_project_image",
+      "when": 1778350491032,
+      "tag": "0000_windy_talos",
       "breakpoints": true
     }
   ]

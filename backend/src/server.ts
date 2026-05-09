@@ -1,6 +1,6 @@
 import { renderPage, servePublicAsset } from './site';
 import { container } from './app-container';
-import { ProjectController } from './src/project/project.controller';
+import { ProjectController } from '@/project/project.controller';
 
 const PORT = Number(process.env.PORT) || 8613;
 

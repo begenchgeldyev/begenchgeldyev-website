@@ -6,7 +6,7 @@ export class ProjectController {
   constructor(private readonly projectsRepository: ProjectsRepository) {}
 
   async handle(req: Request): Promise<Response> {
-    console.log(req.method)
+    console.log(req.method);
     if (req.method === 'GET') {
       return this.get();
     }

@@ -1,15 +1,15 @@
 {
-	"compilerOptions": {
-		"types": ["bun-types"],
-		"target": "esnext",
-		"lib": ["ESNext"],
-		"module": "preserve",
-		"moduleResolution": "bundler",
-		"strict": true,
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./*"]
-		},
-		"experimentalDecorators": true
-	}
+  "compilerOptions": {
+    "types": ["bun-types"],
+    "target": "esnext",
+    "lib": ["ESNext"],
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+    "experimentalDecorators": true,
+  },
 }
