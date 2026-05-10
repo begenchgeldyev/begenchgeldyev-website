@@ -7,7 +7,8 @@ COPY backend ./backend
 COPY src ./src
 
 WORKDIR /usr/src/app/backend
+RUN bun install --frozen-lockfile
 
 EXPOSE 8613
 
-CMD ["bun", "server.ts"]
+CMD ["bun", "src/server.ts"]

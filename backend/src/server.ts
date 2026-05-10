@@ -1,4 +1,4 @@
-import { renderPage, servePublicAsset } from './site';
+import { renderPage, servePublicAsset } from '../site';
 import { container } from './app-container';
 import { ProjectController } from '@/project/project.controller';
 

@@ -1,7 +1,7 @@
 import { Container } from "./DIContainer"
 import { db } from "./db"
-import { ProjectController } from "./src/project/project.controller"
-import { ProjectsRepository } from "./src/project/project.repository"
+import { ProjectController } from "./project/project.controller"
+import { ProjectsRepository } from "./project/project.repository"
 
 export const container = new Container()
 
