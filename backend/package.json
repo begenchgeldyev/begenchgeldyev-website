@@ -11,7 +11,8 @@
     "format": "biome check --write .",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "db:seed": "bun src/db/seed.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "latest",

@@ -5,19 +5,6 @@ import type { ProjectsRepository } from './project.repository';
 export class ProjectController {
   constructor(private readonly projectsRepository: ProjectsRepository) {}
 
-  async handle(req: Request): Promise<Response> {
-    console.log(req.method);
-    if (req.method === 'GET') {
-      return this.get();
-    }
-
-    if (req.method === 'POST') {
-      return this.post(req);
-    }
-
-    return Response.json({ error: 'Method Not Allowed' }, { status: 405 });
-  }
-
   async get() {
     const items = await this.projectsRepository.list();
     return Response.json({ projects: items });
