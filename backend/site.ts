@@ -81,14 +81,15 @@ function fillTemplate(template: string, values: Record<string, string>) {
 }
 
 async function loadTemplate(templatePath: string) {
-  const cached = templateCache.get(templatePath);
-  if (cached) {
-    return cached;
+  if (process.env.NODE_ENV === 'production') {
+    const cached = templateCache.get(templatePath);
+    if (cached) return cached;
+    const promise = Bun.file(templatePath).text();
+    templateCache.set(templatePath, promise);
+    return promise;
   }
 
-  const promise = Bun.file(templatePath).text();
-  templateCache.set(templatePath, promise);
-  return promise;
+  return Bun.file(templatePath).text();
 }
 
 export async function renderComponentTemplate(componentPath: string, values: Record<string, string> = {}) {

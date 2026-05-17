@@ -90,7 +90,7 @@ async function renderProjectEditorScript(project: ProjectRecord) {
   });
 
   return renderComponentTemplate('projects/editor-script.html', {
-    editorStateAttr: escapeHtml(state),
+    projectMode: escapeHtml(state),
     emptyContentHtmlAttr: escapeHtml(await renderComponentTemplate('projects/content-empty.html')),
   });
 }
@@ -101,25 +101,45 @@ async function renderProjectPage(req: Request, project: ProjectRecord, canEdit: 
   const createdAt = formatProjectDate(project.createdAt);
   const updatedAt = formatProjectDate(project.updatedAt);
   const visibility = project.isHidden ? 'Hidden' : 'Published';
-  const editorHint = canEdit ? await renderComponentTemplate('projects/editor-hint.html') : '';
+  const adminControls = canEdit
+    ? `<div class="space-y-3 border border-primary-container/30 bg-primary-container/5 p-4">
+        <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-primary-container">[ADMIN]</div>
+        <div class="flex flex-wrap gap-3">
+          <button
+            id="project-upload-trigger"
+            type="button"
+            class="border border-outline-variant/30 px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary-container">
+            Upload Image
+          </button>
+          <button
+            id="project-visibility-toggle"
+            type="button"
+            class="border border-outline-variant/30 px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary-container">
+            ${project.isHidden ? 'Publish Project' : 'Hide Project'}
+          </button>
+        </div>
+        <input id="project-upload-input" type="file" accept="image/*" class="hidden" />
+        <div id="project-admin-status" class="font-mono text-xs text-on-surface-variant"></div>
+      </div>`
+    : '';
   const imageBlock = image
-    ? `<div class="overflow-hidden border border-outline-variant/30 bg-surface" ${canEdit ? 'data-admin-editable="image" ondblclick="window.__openProjectEditor && window.__openProjectEditor(event)"' : ''}>
+    ? `<div class="overflow-hidden border border-outline-variant/30 bg-surface" ${canEdit ? 'data-admin-editable="image"' : ''}>
         <img data-project-preview class="max-h-[520px] w-full object-cover" src="${escapeHtml(image)}" alt="${escapeHtml(project.name)} preview"/>
       </div>`
     : `<div class="overflow-hidden border border-outline-variant/30 bg-surface" hidden>
         <img data-project-preview class="max-h-[520px] w-full object-cover" src="" alt="${escapeHtml(project.name)} preview"/>
       </div>`;
   const contentHtml = await renderComponentTemplate('projects/page.html', {
+    adminControls,
     content: await renderContentHtml(project.content),
     createdAt: escapeHtml(createdAt),
     description: escapeHtml(description),
     editor: canEdit ? `${await renderProjectEditor()}${await renderProjectEditorScript(project)}` : '',
-    editorHint,
     headerEditableAttrs: canEdit
-      ? 'data-admin-editable="header" ondblclick="window.__openProjectEditor && window.__openProjectEditor(event)"'
+      ? 'data-admin-editable="header"'
       : '',
     contentEditableAttrs: canEdit
-      ? 'data-admin-editable="content" ondblclick="window.__openProjectEditor && window.__openProjectEditor(event)"'
+      ? 'data-admin-editable="content"'
       : '',
     imageBlock,
     projectId: String(project.id),

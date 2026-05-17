@@ -11,15 +11,6 @@
   <section class="grid grid-cols-1 gap-8 lg:grid-cols-12">
     <div class="lg:col-span-8 space-y-8">
       <div class="border border-outline-variant/30 bg-surface-container-lowest/60 p-8" {{headerEditableAttrs}}>
-        <div class="mb-6 flex flex-wrap items-center gap-3">
-          <span
-            class="font-mono text-xs uppercase tracking-[0.2em] text-primary-container border border-primary-container/30 bg-primary-container/10 px-3 py-1">
-            [PROJECT_DOSSIER]
-          </span>
-          <span data-project-visibility class="font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">
-            {{ visibility }}
-          </span>
-        </div>
         <h1
           data-project-field="name"
           class="text-4xl md:text-6xl font-headline font-bold uppercase tracking-tighter text-white outline-none"
@@ -54,6 +45,7 @@
         <div>
           <div class="font-mono text-xs uppercase tracking-[0.2em] text-primary-container">[METADATA]</div>
         </div>
+        {{ adminControls }}
         <div class="space-y-4">
           <div class="border border-outline-variant/20 bg-background/60 p-4">
             <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Project ID</div>
@@ -66,6 +58,10 @@
           <div class="border border-outline-variant/20 bg-background/60 p-4">
             <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Updated</div>
             <div class="mt-2 font-mono text-sm text-on-surface">{{ updatedAt }}</div>
+          </div>
+          <div class="border border-outline-variant/20 bg-background/60 p-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Visibility</div>
+            <div data-project-visibility class="mt-2 font-mono text-sm text-on-surface">{{ visibility }}</div>
           </div>
           <div class="border border-outline-variant/20 bg-background/60 p-4">
             <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Route</div>

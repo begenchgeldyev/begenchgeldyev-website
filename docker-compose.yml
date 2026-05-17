@@ -48,6 +48,11 @@ services:
       - ./backend/.env
     environment:
       DATABASE_URL: postgres://begench:begench@postgres:5432/begenchgeldyev
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./backend/src:/usr/src/app/backend/src
+      - ./backend/site.ts:/usr/src/app/backend/site.ts
+    command: ["bun", "--hot", "src/server.ts"]
     depends_on:
       - postgres
     networks:
