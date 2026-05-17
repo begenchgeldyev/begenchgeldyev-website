@@ -1,0 +1,275 @@
+<script data-editor-state="{{editorStateAttr}}" data-empty-content-html="{{emptyContentHtmlAttr}}">
+(() => {
+  const currentScript = document.currentScript;
+  const project = JSON.parse(currentScript.dataset.editorState);
+  const emptyContentHtml = currentScript.dataset.emptyContentHtml;
+  const editor = document.getElementById('project-editor');
+  const status = document.getElementById('project-editor-status');
+  const imageInput = document.getElementById('project-editor-image');
+  const hiddenInput = document.getElementById('project-editor-hidden');
+  const titleNode = document.querySelector("[data-project-field='name']");
+  const descriptionNode = document.querySelector("[data-project-field='description']");
+  const contentNode = document.querySelector("[data-project-field='content']");
+  const previewNode = document.querySelector('[data-project-preview]');
+  const visibilityNode = document.querySelector('[data-project-visibility]');
+  const toolbarButtons = document.querySelectorAll('[data-editor-command]');
+  const editables = [titleNode, descriptionNode, contentNode].filter(Boolean);
+  let editing = false;
+  let snapshot = null;
+  let activeEditable = null;
+
+  const escapeHtml = (value) =>
+    value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+
+  const insertHtml = (html) => {
+    document.execCommand('insertHTML', false, html);
+  };
+
+  const normalizeContent = () => {
+    if (!contentNode.innerHTML.trim()) {
+      contentNode.innerHTML = emptyContentHtml;
+    }
+  };
+
+  const applyViewState = () => {
+    titleNode.textContent = project.name ?? '';
+    descriptionNode.textContent = project.description ?? '';
+    contentNode.innerHTML = project.content && project.content.trim().length > 0 ? project.content : emptyContentHtml;
+    imageInput.value = project.image ?? '';
+    hiddenInput.checked = Boolean(project.isHidden);
+    if (visibilityNode) {
+      visibilityNode.textContent = project.isHidden ? 'Hidden' : 'Published';
+    }
+    if (previewNode) {
+      if (project.image && project.image.trim().length > 0) {
+        previewNode.src = project.image;
+        previewNode.parentElement.hidden = false;
+      } else {
+        previewNode.parentElement.hidden = true;
+      }
+    }
+  };
+
+  const setEditable = (enabled) => {
+    editables.forEach((node) => {
+      node.contentEditable = enabled ? 'true' : 'false';
+      node.dataset.editing = enabled ? 'true' : 'false';
+      node.classList.toggle('ring-1', enabled);
+      node.classList.toggle('ring-primary-container', enabled);
+      node.classList.toggle('ring-inset', enabled);
+      node.classList.toggle('bg-primary-container/5', enabled);
+    });
+  };
+
+  const setActiveEditable = (node) => {
+    activeEditable = node;
+  };
+
+  const applyCommand = (command) => {
+    if (!editing || activeEditable !== contentNode) {
+      status.textContent = 'Use the toolbar while editing the full brief.';
+      return;
+    }
+
+    contentNode.focus();
+
+    if (command === 'paragraph') {
+      document.execCommand('formatBlock', false, 'p');
+      return;
+    }
+    if (command === 'h2') {
+      document.execCommand('formatBlock', false, 'h2');
+      return;
+    }
+    if (command === 'bold') {
+      document.execCommand('bold');
+      return;
+    }
+    if (command === 'italic') {
+      document.execCommand('italic');
+      return;
+    }
+    if (command === 'ul') {
+      document.execCommand('insertUnorderedList');
+      return;
+    }
+    if (command === 'ol') {
+      document.execCommand('insertOrderedList');
+      return;
+    }
+    if (command === 'code') {
+      const selection = window.getSelection();
+      const text = selection ? selection.toString() : '';
+      insertHtml(`<code>${escapeHtml(text || 'code')}</code>`);
+      return;
+    }
+    if (command === 'link') {
+      const href = window.prompt('Link URL');
+      if (!href) {
+        return;
+      }
+      document.execCommand('createLink', false, href);
+    }
+  };
+
+  const openEditor = (event) => {
+    if (editing) {
+      return;
+    }
+    snapshot = {
+      name: titleNode.textContent,
+      description: descriptionNode.textContent,
+      content: contentNode.innerHTML,
+      image: imageInput.value,
+      isHidden: hiddenInput.checked,
+    };
+    editing = true;
+    editor.hidden = false;
+    setEditable(true);
+    status.textContent = 'Inline editing unlocked.';
+    const clickedEditable = event?.target?.closest?.('[data-project-field]');
+    const targetNode = clickedEditable || contentNode;
+    setActiveEditable(targetNode);
+    editor.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    window.setTimeout(() => {
+      targetNode.focus();
+    }, 0);
+  };
+
+  window.__openProjectEditor = openEditor;
+
+  document.querySelectorAll('[data-admin-editable]').forEach((node) => {
+    node.addEventListener('dblclick', openEditor);
+  });
+
+  editables.forEach((node) => {
+    node.addEventListener('dblclick', openEditor);
+    node.addEventListener('focus', () => setActiveEditable(node));
+    node.addEventListener('click', () => setActiveEditable(node));
+  });
+
+  titleNode.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  });
+
+  descriptionNode.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      insertHtml('<br>');
+    }
+  });
+
+  contentNode.addEventListener('keydown', (event) => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      insertHtml('&nbsp;&nbsp;');
+    }
+  });
+
+  titleNode.addEventListener('paste', (event) => {
+    event.preventDefault();
+    const text = event.clipboardData?.getData('text/plain') || '';
+    document.execCommand('insertText', false, text.replace(/\s+/g, ' ').trim());
+  });
+
+  descriptionNode.addEventListener('paste', (event) => {
+    event.preventDefault();
+    const text = event.clipboardData?.getData('text/plain') || '';
+    document.execCommand('insertText', false, text);
+  });
+
+  contentNode.addEventListener('paste', (event) => {
+    event.preventDefault();
+    const html = event.clipboardData?.getData('text/html');
+    const text = event.clipboardData?.getData('text/plain') || '';
+    if (html) {
+      insertHtml(html);
+      return;
+    }
+    const paragraphs = text
+      .split(/\n{2,}/)
+      .map((block) => block.trim())
+      .filter(Boolean)
+      .map((block) => `<p>${escapeHtml(block).replaceAll('\n', '<br>')}</p>`)
+      .join('');
+    insertHtml(paragraphs || escapeHtml(text));
+  });
+
+  toolbarButtons.forEach((button) => {
+    button.addEventListener('click', () => applyCommand(button.dataset.editorCommand));
+  });
+
+  imageInput.addEventListener('input', () => {
+    if (!previewNode) {
+      return;
+    }
+    const value = imageInput.value.trim();
+    if (value) {
+      previewNode.src = value;
+      previewNode.parentElement.hidden = false;
+    } else {
+      previewNode.parentElement.hidden = true;
+    }
+  });
+
+  hiddenInput.addEventListener('change', () => {
+    if (visibilityNode) {
+      visibilityNode.textContent = hiddenInput.checked ? 'Hidden' : 'Published';
+    }
+  });
+
+  document.getElementById('project-editor-cancel')?.addEventListener('click', () => {
+    if (snapshot) {
+      titleNode.textContent = snapshot.name ?? '';
+      descriptionNode.textContent = snapshot.description ?? '';
+      contentNode.innerHTML = snapshot.content ?? '';
+      imageInput.value = snapshot.image ?? '';
+      hiddenInput.checked = Boolean(snapshot.isHidden);
+      project.name = snapshot.name ?? '';
+      project.description = snapshot.description ?? '';
+      project.content = snapshot.content ?? '';
+      project.image = snapshot.image ?? '';
+      project.isHidden = Boolean(snapshot.isHidden);
+      applyViewState();
+    }
+    normalizeContent();
+    setEditable(false);
+    editing = false;
+    editor.hidden = true;
+    status.textContent = '';
+  });
+
+  document.getElementById('project-editor-save')?.addEventListener('click', async () => {
+    status.textContent = 'Saving...';
+
+    const payload = {
+      name: titleNode.textContent?.trim() || '',
+      description: descriptionNode.textContent?.trim() || '',
+      image: imageInput.value.trim(),
+      content: contentNode.innerHTML.trim(),
+      isHidden: hiddenInput.checked,
+    };
+
+    const response = await fetch(`/api/projects/${project.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const payload = await response.json().catch(() => null);
+      status.textContent = payload?.error || 'Save failed.';
+      return;
+    }
+
+    window.location.reload();
+  });
+
+  applyViewState();
+  normalizeContent();
+})();
+</script>

@@ -1,0 +1,191 @@
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://unpkg.com/htmx.org@2.0.4"></script>
+<link
+  href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap"
+  rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script data-dev-user-email="{{serializedEmailAttr}}">
+const devUserEmail = JSON.parse(document.currentScript.dataset.devUserEmail);
+window.__DEV_USER_EMAIL__ = devUserEmail;
+
+if (window.__DEV_USER_EMAIL__) {
+  document.cookie = `dev-user-email=${encodeURIComponent(window.__DEV_USER_EMAIL__)}; path=/; SameSite=Lax`;
+}
+
+document.addEventListener('htmx:configRequest', (event) => {
+  if (window.__DEV_USER_EMAIL__) {
+    event.detail.headers['x-user-email'] = window.__DEV_USER_EMAIL__;
+  }
+});
+
+const nativeFetch = window.fetch.bind(window);
+window.fetch = (input, init) => {
+  const request = new Request(input, init || {});
+  const headers = new Headers(request.headers);
+  if (window.__DEV_USER_EMAIL__) {
+    headers.set('x-user-email', window.__DEV_USER_EMAIL__);
+  }
+  return nativeFetch(new Request(request, { headers }));
+};
+</script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        surface: '#131313',
+        'on-tertiary-container': '#00710b',
+        'on-surface': '#f2f1f0',
+        'on-primary-container': '#002203',
+        'inverse-primary': '#006e16',
+        'on-primary-fixed-variant': '#00530e',
+        background: '#0a0a0a',
+        'surface-container-lowest': '#0e0e0e',
+        'surface-container-high': '#2a2a2a',
+        'on-tertiary-fixed-variant': '#005306',
+        secondary: '#ffd393',
+        'on-tertiary': '#003a03',
+        'on-surface-variant': '#d1decb',
+        'on-error': '#690005',
+        'surface-bright': '#3a3939',
+        'on-secondary-fixed': '#281800',
+        'primary-fixed-dim': '#00e639',
+        'primary-fixed': '#72ff70',
+        'surface-variant': '#353534',
+        'on-primary-fixed': '#002203',
+        'error-container': '#93000a',
+        tertiary: '#eaffdf',
+        'on-primary': '#003907',
+        'surface-tint': '#00e639',
+        'outline-variant': '#4a5d45',
+        'on-secondary-container': '#694600',
+        'on-error-container': '#ffdad6',
+        'inverse-surface': '#e5e2e1',
+        'on-secondary-fixed-variant': '#614000',
+        'primary-container': '#00ff41',
+        primary: '#ebffe2',
+        'tertiary-container': '#7ff670',
+        'on-tertiary-fixed': '#002201',
+        'on-secondary': '#432c00',
+        'on-background': '#f2f1f0',
+        'inverse-on-surface': '#313030',
+        'surface-dim': '#131313',
+        outline: '#a4b59f',
+        'secondary-fixed-dim': '#ffba43',
+        'tertiary-fixed': '#85fd75',
+        'secondary-container': '#fdaf00',
+        'surface-container': '#201f1f',
+        'tertiary-fixed-dim': '#69df5c',
+        'surface-container-highest': '#353534',
+        error: '#ffb4ab',
+        'surface-container-low': '#1c1b1b',
+        'secondary-fixed': '#ffddaf',
+      },
+      fontFamily: {
+        headline: ['Space Grotesk'],
+        body: ['Inter'],
+        label: ['Space Grotesk'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      borderRadius: { DEFAULT: '0.125rem', lg: '0.25rem', xl: '0.5rem', full: '9999px' },
+    },
+  },
+};
+</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+  vertical-align: middle;
+}
+.scanline {
+  width: 100%;
+  height: 100px;
+  z-index: 100;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 255, 65, 0.015) 50%, rgba(0, 0, 0, 0) 100%);
+  position: fixed;
+  pointer-events: none;
+  left: 0;
+  top: -100px;
+  animation: scanline 12s linear infinite;
+}
+@keyframes scanline {
+  0% {
+    top: -100px;
+  }
+  100% {
+    top: 100%;
+  }
+}
+.blinking-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 1.2em;
+  background-color: #00ff41;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+body {
+  background-color: #0a0a0a;
+  cursor: crosshair;
+}
+#terminal-input {
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: "JetBrains Mono", monospace !important;
+}
+#terminal-input:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #00802a;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff41;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1a2e1a #0a0a0a;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #353534;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #00ff41;
+}
+.htmx-request .loading-indicator {
+  display: flex !important;
+}
+.htmx-request.loading-indicator {
+  display: flex !important;
+}
+</style>

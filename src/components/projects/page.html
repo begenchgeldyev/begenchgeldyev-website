@@ -1,0 +1,78 @@
+<main class="max-w-6xl mx-auto px-8 py-20 min-h-screen">
+  <div class="mb-10">
+    <a
+      href="/projects"
+      class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-primary-container hover:text-primary">
+      <span>←</span>
+      <span>Back to projects</span>
+    </a>
+  </div>
+
+  <section class="grid grid-cols-1 gap-8 lg:grid-cols-12">
+    <div class="lg:col-span-8 space-y-8">
+      <div class="border border-outline-variant/30 bg-surface-container-lowest/60 p-8" {{headerEditableAttrs}}>
+        <div class="mb-6 flex flex-wrap items-center gap-3">
+          <span
+            class="font-mono text-xs uppercase tracking-[0.2em] text-primary-container border border-primary-container/30 bg-primary-container/10 px-3 py-1">
+            [PROJECT_DOSSIER]
+          </span>
+          <span data-project-visibility class="font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">
+            {{ visibility }}
+          </span>
+        </div>
+        <h1
+          data-project-field="name"
+          class="text-4xl md:text-6xl font-headline font-bold uppercase tracking-tighter text-white outline-none"
+          spellcheck="false">
+          {{ projectName }}
+        </h1>
+        <p
+          data-project-field="description"
+          class="mt-5 max-w-3xl font-mono text-base leading-8 text-on-surface-variant outline-none"
+          spellcheck="false">
+          {{ description }}
+        </p>
+        {{ editorHint }}
+      </div>
+
+      {{ imageBlock }}
+
+      <div class="border border-outline-variant/30 bg-surface-container-lowest/40 p-8" {{contentEditableAttrs}}>
+        <div class="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-primary-container">[FULL_BRIEF]</div>
+        <div
+          data-project-field="content"
+          class="font-mono text-sm leading-8 text-on-surface outline-none [&_a]:text-primary-container [&_code]:bg-background [&_code]:px-1 [&_pre]:overflow-x-auto [&_pre]:bg-background [&_pre]:p-4 [&_ul]:list-disc [&_ul]:pl-6"
+          spellcheck="false">
+          {{ content }}
+        </div>
+      </div>
+      {{ editor }}
+    </div>
+
+    <aside class="lg:col-span-4">
+      <div class="sticky top-28 space-y-6 border border-outline-variant/30 bg-surface-container-lowest/60 p-6">
+        <div>
+          <div class="font-mono text-xs uppercase tracking-[0.2em] text-primary-container">[METADATA]</div>
+        </div>
+        <div class="space-y-4">
+          <div class="border border-outline-variant/20 bg-background/60 p-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Project ID</div>
+            <div class="mt-2 font-mono text-sm text-on-surface">#{{ projectId }}</div>
+          </div>
+          <div class="border border-outline-variant/20 bg-background/60 p-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Created</div>
+            <div class="mt-2 font-mono text-sm text-on-surface">{{ createdAt }}</div>
+          </div>
+          <div class="border border-outline-variant/20 bg-background/60 p-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Updated</div>
+            <div class="mt-2 font-mono text-sm text-on-surface">{{ updatedAt }}</div>
+          </div>
+          <div class="border border-outline-variant/20 bg-background/60 p-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Route</div>
+            <div class="mt-2 break-all font-mono text-sm text-on-surface">{{ route }}</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>

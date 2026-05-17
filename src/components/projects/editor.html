@@ -1,0 +1,90 @@
+<section id="project-editor" class="mt-8 border border-primary-container/30 bg-surface-container-lowest/80 p-5" hidden>
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+      <div class="font-mono text-xs uppercase tracking-[0.2em] text-primary-container">[INLINE_EDIT_MODE]</div>
+      <p class="mt-2 font-mono text-sm text-on-surface-variant">
+        Double-click unlocks live editing for the visible content. Save persists the current page state.
+      </p>
+    </div>
+    <div class="flex items-center gap-3">
+      <button
+        type="button"
+        id="project-editor-cancel"
+        class="border border-outline-variant/40 px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary">
+        Cancel
+      </button>
+      <button
+        type="button"
+        id="project-editor-save"
+        class="border border-primary-container bg-primary-container/10 px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-primary-container hover:bg-primary-container/20">
+        Save
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
+    <label class="block">
+      <span class="mb-2 block font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Image URL</span>
+      <input
+        id="project-editor-image"
+        class="w-full border border-outline-variant/30 bg-background px-4 py-3 font-mono text-sm text-on-surface"
+        type="url">
+    </label>
+    <label class="inline-flex items-center gap-3 md:self-end">
+      <input id="project-editor-hidden" class="h-4 w-4 border-outline-variant/30 bg-background text-primary-container" type="checkbox">
+      <span class="font-mono text-sm text-on-surface">Hide this project from public listing</span>
+    </label>
+  </div>
+  <div class="mt-5 flex flex-wrap items-center gap-2 border border-outline-variant/30 bg-background/60 p-3">
+    <span class="mr-2 font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Format</span>
+    <button
+      type="button"
+      data-editor-command="paragraph"
+      class="border border-outline-variant/30 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary">
+      P
+    </button>
+    <button
+      type="button"
+      data-editor-command="h2"
+      class="border border-outline-variant/30 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary">
+      H2
+    </button>
+    <button
+      type="button"
+      data-editor-command="bold"
+      class="border border-outline-variant/30 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary">
+      Bold
+    </button>
+    <button
+      type="button"
+      data-editor-command="italic"
+      class="border border-outline-variant/30 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary">
+      Italic
+    </button>
+    <button
+      type="button"
+      data-editor-command="code"
+      class="border border-outline-variant/30 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary">
+      Code
+    </button>
+    <button
+      type="button"
+      data-editor-command="ul"
+      class="border border-outline-variant/30 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary">
+      UL
+    </button>
+    <button
+      type="button"
+      data-editor-command="ol"
+      class="border border-outline-variant/30 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary">
+      OL
+    </button>
+    <button
+      type="button"
+      data-editor-command="link"
+      class="border border-outline-variant/30 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface hover:border-primary-container hover:text-primary">
+      Link
+    </button>
+  </div>
+  <div id="project-editor-status" class="mt-4 font-mono text-sm text-on-surface-variant"></div>
+</section>
