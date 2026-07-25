@@ -10,14 +10,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "bun --cwd apps/site run dev",
-    "start": "bun --cwd apps/site run start",
+    "dev": "cd apps/site && bun run dev",
+    "start": "cd apps/site && bun run start",
     "lint": "biome check .",
     "format": "biome check --write .",
-    "db:generate": "bun --cwd packages/core run db:generate",
-    "db:migrate": "bun --cwd packages/core run db:migrate",
-    "db:push": "bun --cwd packages/core run db:push",
-    "db:seed": "bun --cwd packages/core run db:seed"
+    "db:generate": "cd packages/core && bun run db:generate",
+    "db:migrate": "cd packages/core && bun run db:migrate",
+    "db:push": "cd packages/core && bun run db:push",
+    "db:seed": "cd packages/core && bun run db:seed"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.11",
