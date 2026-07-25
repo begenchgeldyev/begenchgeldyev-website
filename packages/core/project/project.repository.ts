@@ -1,6 +1,6 @@
 import { desc, eq } from 'drizzle-orm';
-import { Injectable } from '@/DIContainer';
-import { type Db, projects } from '@/db';
+import { Injectable } from '../DIContainer';
+import { type Db, projects } from '../db';
 
 @Injectable()
 export class ProjectsRepository {
