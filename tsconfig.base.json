@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "types": ["bun-types"],
+    "target": "esnext",
+    "lib": ["ESNext"],
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  }
+}
