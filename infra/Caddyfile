@@ -1,0 +1,8 @@
+www.begenchgeldyev.com {
+    redir https://begenchgeldyev.com{uri} permanent
+}
+
+begenchgeldyev.com {
+    reverse_proxy site:8613
+    encode gzip
+}

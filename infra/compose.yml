@@ -1,0 +1,52 @@
+name: begenchgeldyev
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - site
+    networks:
+      - begenchgeldyev-network
+
+  site:
+    build:
+      context: ..
+      dockerfile: apps/site/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./site.env
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - postgres
+    networks:
+      - begenchgeldyev-network
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: begench
+      POSTGRES_PASSWORD: begench
+      POSTGRES_DB: begenchgeldyev
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - begenchgeldyev-network
+
+volumes:
+  pgdata:
+  caddy-data:
+  caddy-config:
+
+networks:
+  begenchgeldyev-network:
+    driver: bridge
