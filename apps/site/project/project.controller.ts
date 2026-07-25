@@ -1,7 +1,5 @@
-import { canAccess, resolveEmail } from '@/abac/pep';
-import { Injectable } from '@/DIContainer';
-import { renderComponentTemplate, renderDocument } from '../../site';
-import type { ProjectsRepository } from './project.repository';
+import { canAccess, resolveEmail, Injectable, type ProjectsRepository } from '@bg/core';
+import { renderComponentTemplate, renderDocument } from '../site';
 
 type ProjectRecord = Awaited<ReturnType<ProjectsRepository['list']>>[number];
 

@@ -1,6 +1,6 @@
-import { canAccess, enforce, resolveEmail } from '@/abac/pep';
-import { ProjectController } from '@/project/project.controller';
-import { renderPage, servePublicAsset } from '../site';
+import { canAccess, enforce, resolveEmail } from '@bg/core/abac/pep';
+import { ProjectController } from './project/project.controller';
+import { renderPage, servePublicAsset } from './site';
 import { container } from './app-container';
 
 const PORT = Number(process.env.PORT) || 8613;
