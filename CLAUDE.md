@@ -59,6 +59,10 @@ Page fragments live in `src/pages/`. Component partials (header, footer HTML) li
 
 Frontend uses **HTMX** (no React/Vue). Styling uses **Tailwind CSS from CDN** with a Material Design 3 color palette extended in the inline `tailwind.config`. Fonts: Space Grotesk (headline/label), Inter (body), JetBrains Mono (mono).
 
+### Interaction conventions
+
+Use `onMouseDown` instead of `onClick` for interactive controls so UI actions feel more immediate. Preserve keyboard and accessibility behavior when a control needs it.
+
 ### Dependency injection
 
 `backend/src/DIContainer.ts` is a hand-rolled singleton DI container. Classes decorated with `@Injectable()` or registered via `container.registerFactory()` are resolved lazily and cached as singletons.
