@@ -1,0 +1,29 @@
+{
+  "name": "@bg/core",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./db": "./db/index.ts",
+    "./db/schema": "./db/schema.ts",
+    "./abac/pep": "./abac/pep.ts",
+    "./abac/pdp": "./abac/pdp.ts",
+    "./abac/pip": "./abac/pip.ts",
+    "./DIContainer": "./DIContainer.ts",
+    "./project/project.repository": "./project/project.repository.ts"
+  },
+  "scripts": {
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:seed": "bun db/seed.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.2",
+    "postgres": "^3.4.7"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.10"
+  }
+}

@@ -1,0 +1,4 @@
+:80 {
+    reverse_proxy site:8613
+    encode gzip
+}

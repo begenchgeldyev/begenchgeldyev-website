@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/bun-sql';
-import { users, policies } from '@/db/schema';
+import { policies, users } from '../db/schema';
 
 const db = drizzle(process.env.DATABASE_URL!);
 

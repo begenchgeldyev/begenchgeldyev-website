@@ -22,11 +22,10 @@ function escapeHtml(value: string) {
   return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 }
 
-const ROOT_DIR = join(import.meta.dir, '..');
-const SRC_DIR = join(ROOT_DIR, 'src');
-const PAGES_DIR = join(SRC_DIR, 'pages');
-const COMPONENTS_DIR = join(SRC_DIR, 'components');
-const PUBLIC_DIR = join(SRC_DIR, 'public');
+const APP_DIR = import.meta.dir;
+const PAGES_DIR = join(APP_DIR, 'pages');
+const COMPONENTS_DIR = join(APP_DIR, 'components');
+const PUBLIC_DIR = join(APP_DIR, 'public');
 const templateCache = new Map<string, Promise<string>>();
 
 const MIME: Record<string, string> = {

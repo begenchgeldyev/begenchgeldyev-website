@@ -15,10 +15,10 @@ Default to using Bun instead of Node.js.
 
 ## Commands
 
-All backend commands run from `backend/`:
+Run from the repo root (Bun workspace):
 
 ```bash
-bun run dev          # hot-reload dev server
+bun run dev          # hot-reload dev server (delegates to apps/site)
 bun run start        # production server
 bun run lint         # biome check (no writes)
 bun run format       # biome check --write (formats + organizes imports)
@@ -27,10 +27,12 @@ bun run db:migrate   # apply migrations to postgres
 bun run db:seed      # seed owner user and default policies
 ```
 
-From the repo root:
+Local Docker stack:
 ```bash
-docker compose up -d  # start nginx, postgres, backend, certbot
+docker compose -f infra/compose.yml up -d  # caddy, site, postgres
 ```
+
+**Local env files:** `apps/site/.env` (for `bun run dev`) and `packages/core/.env` (for `bun run db:*`) — both hold `DATABASE_URL` (and `ADMIN_SECRET` for site). `infra/site.env` (created from `infra/site.env.example`) is the one Compose loads for the containerized site.
 
 ## Architecture
 
@@ -39,35 +41,39 @@ This is a personal portfolio site with a terminal/hacker aesthetic (dark theme, 
 ### Request flow
 
 ```
-Client → nginx (SSL termination) → Bun server (port 8613)
+Client → Caddy (SSL termination) → Bun server (port 8613)
 ```
 
-The single Bun server (`backend/server.ts`) handles everything:
+The single Bun server (`apps/site/server.ts`) handles everything:
 1. **API routes** (`/title`, `/projects`) — defined directly in `Bun.serve({ routes })`.
-2. **Static assets** (`/public/*`) — served from `src/public/` via `servePublicAsset()`.
-3. **HTML pages** (everything else) — dispatched to `renderPage()` in `backend/site.ts`.
+2. **Static assets** (`/public/*`) — served from `apps/site/public/` via `servePublicAsset()`.
+3. **HTML pages** (everything else) — dispatched to `renderPage()` in `apps/site/site.ts`.
 
 ### SSR (server-side rendering)
 
-`backend/site.ts` is the templating engine. It owns:
+`apps/site/site.ts` is the templating engine. It owns:
 - **`PAGE_CONFIGS`** — maps URL paths to page metadata (title, active nav, footer variant, etc.).
 - **`renderLayout()`** — assembles the full HTML document: shared `<head>` (Tailwind CDN, HTMX, fonts, custom CSS), header, page fragment, footer.
-- **`resolveIncludes()`** — replaces `<!--#include filename.html-->` comments in page HTML with component partials from `src/components/`.
+- **`resolveIncludes()`** — replaces `<!--#include filename.html-->` comments in page HTML with component partials from `apps/site/components/`.
 - **`servePublicAsset()`** — path-safe static file serving with MIME detection.
 
-Page fragments live in `src/pages/`. Component partials (header, footer HTML) live in `src/components/` but are currently superseded by the TypeScript `renderHeader()`/`renderFooter()` functions in `site.ts`.
+Page fragments live in `apps/site/pages/`. Component partials (header, footer HTML) live in `apps/site/components/` but are currently superseded by the TypeScript `renderHeader()`/`renderFooter()` functions in `site.ts`.
 
 Frontend uses **HTMX** (no React/Vue). Styling uses **Tailwind CSS from CDN** with a Material Design 3 color palette extended in the inline `tailwind.config`. Fonts: Space Grotesk (headline/label), Inter (body), JetBrains Mono (mono).
 
+### Interaction conventions
+
+Use `onMouseDown` instead of `onClick` for interactive controls so UI actions feel more immediate. Preserve keyboard and accessibility behavior when a control needs it.
+
 ### Dependency injection
 
-`backend/src/DIContainer.ts` is a hand-rolled singleton DI container. Classes decorated with `@Injectable()` or registered via `container.registerFactory()` are resolved lazily and cached as singletons.
+`packages/core/DIContainer.ts` is a hand-rolled singleton DI container. Classes decorated with `@Injectable()` or registered via `container.registerFactory()` are resolved lazily and cached as singletons.
 
-Wiring lives in `backend/src/app-container.ts`. When adding new services, register them there.
+Wiring lives in `apps/site/app-container.ts`. When adding new services, register them there.
 
 ### ABAC authorization
 
-Routes that require authorization wrap their handler with `enforce()` from `backend/src/abac/pep.ts`:
+Routes that require authorization wrap their handler with `enforce()` from `packages/core/abac/pep.ts`:
 
 ```ts
 POST: enforce(handler, { actions: 'create', resource: 'project' })
@@ -78,14 +84,17 @@ The enforcement pipeline:
 - **PDP** (`pdp.ts`) — pure function that evaluates policies against `{ subject, action, resource, resourceAttributes, context }`. Deny-overrides-allow; defaults to deny if no policy matches.
 - **PIP** (`pip.ts`) — fetches `users` and `policies` rows from Postgres.
 
-Policies and user roles are stored in the database (`backend/src/db/schema.ts`). Seed the initial owner account and allow-all policy with `bun run db:seed`.
+Policies and user roles are stored in the database (`packages/core/db/schema.ts`). Seed the initial owner account and allow-all policy with `bun run db:seed`.
 
 ### Database
 
 Drizzle ORM with PostgreSQL. Schema: `projects`, `users` (with `role` enum: owner/editor/viewer), `policies` (with `effect` enum: allow/deny).
 
-Path alias `@/` resolves to `backend/src/` (configured in `tsconfig.json`).
-
 ### Infrastructure
 
-`docker-compose.yml` runs four services: `nginx` (reverse proxy, SSL), `certbot` (auto-renew Let's Encrypt), `postgres` (port 5432), `backend` (port 8613). The backend's `DATABASE_URL` is injected by Compose; local dev reads it from `backend/.env`.
+`infra/compose.yml` runs three services:
+- **caddy** — Caddy 2, terminates HTTPS via automatic Let's Encrypt, reverse-proxies to `site:8613`. Config lives in `infra/Caddyfile`.
+- **site** — the `apps/site` Bun app, built via `apps/site/Dockerfile` with the repo root as build context so it can install the workspace.
+- **postgres** — PostgreSQL 17. `DATABASE_URL` and `ADMIN_SECRET` are injected via `infra/site.env` (untracked; create from `infra/site.env.example`).
+
+Only Caddy exposes host ports (80/443). The site and Postgres talk on the internal `begenchgeldyev-network` bridge.

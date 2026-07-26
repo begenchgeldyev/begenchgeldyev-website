@@ -1,4 +1,5 @@
 .env
+site.env
 dist/
 node_modules/
 .todo.txt

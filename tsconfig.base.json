@@ -6,10 +6,9 @@
     "module": "preserve",
     "moduleResolution": "bundler",
     "strict": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-    },
     "experimentalDecorators": true,
-  },
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  }
 }

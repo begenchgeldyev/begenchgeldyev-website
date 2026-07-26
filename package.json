@@ -1,19 +1,27 @@
 {
-  "name": "personal-website",
+  "name": "begenchgeldyev",
   "author": "Begench Geldyev <begenchgeldyev@gmail.com>",
   "version": "1.0.0",
-  "description": "Personal portfolio & blog — HTMX + Tailwind + Express",
+  "description": "Personal portfolio & blog — Bun workspace (site + core)",
   "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "start": "bun backend/server.ts",
-    "dev": "bun --hot backend/server.ts"
+    "dev": "cd apps/site && bun run dev",
+    "start": "cd apps/site && bun run start",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "db:generate": "cd packages/core && bun run db:generate",
+    "db:migrate": "cd packages/core && bun run db:migrate",
+    "db:push": "cd packages/core && bun run db:push",
+    "db:seed": "cd packages/core && bun run db:seed"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.11",
-    "@types/bun": "latest"
-  },
-  "private": true,
-  "peerDependencies": {
-    "typescript": "^5"
+    "@types/bun": "latest",
+    "typescript": "^5.8.3"
   }
 }
