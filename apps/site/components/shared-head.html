@@ -1,7 +1,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 <link
-  href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap"
   rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script data-dev-user-email="{{serializedEmailAttr}}">
@@ -29,6 +29,17 @@ window.fetch = (input, init) => {
 };
 </script>
 <script id="tailwind-config">
+const MONO_STACK = [
+  '"Noto Sans Mono"',
+  'SFMono-Regular',
+  'Menlo',
+  'Monaco',
+  'Consolas',
+  '"Liberation Mono"',
+  '"Courier New"',
+  'monospace',
+];
+
 tailwind.config = {
   darkMode: 'class',
   theme: {
@@ -83,10 +94,10 @@ tailwind.config = {
         'secondary-fixed': '#ffddaf',
       },
       fontFamily: {
-        headline: ['Space Grotesk'],
-        body: ['Inter'],
-        label: ['Space Grotesk'],
-        mono: ['JetBrains Mono', 'monospace'],
+        headline: MONO_STACK,
+        body: MONO_STACK,
+        label: MONO_STACK,
+        mono: MONO_STACK,
       },
       borderRadius: { DEFAULT: '0.125rem', lg: '0.25rem', xl: '0.5rem', full: '9999px' },
     },
@@ -146,7 +157,7 @@ body {
 #terminal-input {
   -webkit-appearance: none;
   appearance: none;
-  font-family: "JetBrains Mono", monospace !important;
+  font-family: "Noto Sans Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
 #terminal-input:focus {
   outline: none;
