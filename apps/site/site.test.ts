@@ -25,3 +25,26 @@ describe('renderPage language selection', () => {
     expect(html).toContain('lang="ru"');
   });
 });
+
+describe('chrome translation', () => {
+  test('renders English navigation labels by default', async () => {
+    const res = await renderPage('/cv', 'en');
+    const html = await (res as Response).text();
+    expect(html).toContain('>Projects<');
+    expect(html).toContain('>Logs<');
+  });
+
+  test('renders Russian navigation labels', async () => {
+    const res = await renderPage('/cv', 'ru');
+    const html = await (res as Response).text();
+    expect(html).toContain('>Проекты<');
+    expect(html).toContain('>Логи<');
+    expect(html).toContain('>Резюме<');
+  });
+
+  test('keeps the CV pdf label untranslated', async () => {
+    const res = await renderPage('/cv', 'ru');
+    const html = await (res as Response).text();
+    expect(html).toContain('CV.pdf');
+  });
+});

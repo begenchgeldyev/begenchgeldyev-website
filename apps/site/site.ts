@@ -1,5 +1,5 @@
 import { extname, join, normalize, sep } from 'node:path';
-import { type Lang, localizedFragmentFile } from './i18n';
+import { type Lang, localizedFragmentFile, t } from './i18n';
 
 type NavKey = 'projects' | 'logs' | 'cv';
 type FooterVariant = 'default' | 'home';
@@ -111,7 +111,7 @@ function renderNavLink(activeNav: NavKey | undefined, href: string, label: strin
   return `<a class="${classes}" href="${href}"${current}>${label}</a>`;
 }
 
-async function renderHeader(config: PageConfig, _lang: Lang) {
+async function renderHeader(config: PageConfig, lang: Lang) {
   const brand = config.brandIsLink
     ? `<a href="/" class="text-[#00FF41] font-mono font-bold tracking-widest text-sm hover:opacity-80 transition-opacity">
       begench@127.0.0.1
@@ -127,21 +127,21 @@ async function renderHeader(config: PageConfig, _lang: Lang) {
   return renderComponentTemplate('site-header.html', {
     brand,
     navLinks: [
-      renderNavLink(config.activeNav, '/projects', 'Projects', 'projects'),
-      renderNavLink(config.activeNav, '/logs', 'Logs', 'logs'),
-      renderNavLink(config.activeNav, '/cv', 'CV', 'cv'),
+      renderNavLink(config.activeNav, '/projects', t(lang, 'navProjects'), 'projects'),
+      renderNavLink(config.activeNav, '/logs', t(lang, 'navLogs'), 'logs'),
+      renderNavLink(config.activeNav, '/cv', t(lang, 'navCv'), 'cv'),
     ].join(''),
     terminal,
   });
 }
 
-async function renderFooter(config: PageConfig, _lang: Lang) {
+async function renderFooter(config: PageConfig, lang: Lang) {
   if (config.footerVariant === 'home') {
     return renderComponentTemplate('footer-home.html');
   }
 
   const cvLink = config.includeCvLink
-    ? `<a class="font-mono text-xs tracking-widest text-primary-container underline font-bold uppercase" href="/public/Begench%20Geldyev(CV).pdf" target="_blank">CV.pdf</a>`
+    ? `<a class="font-mono text-xs tracking-widest text-primary-container underline font-bold uppercase" href="/public/Begench%20Geldyev(CV).pdf" target="_blank">${t(lang, 'footerCvLink')}</a>`
     : '';
 
   return renderComponentTemplate('footer-default.html', { cvLink });
