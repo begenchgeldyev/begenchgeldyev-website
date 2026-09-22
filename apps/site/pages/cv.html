@@ -3,7 +3,7 @@
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-    <!-- Left column: Experience + Education -->
+    <!-- Left column: Experience + Projects + Education -->
     <div class="md:col-span-2 space-y-14">
 
       <!-- Experience -->
@@ -12,107 +12,141 @@
           <span class="font-mono text-sm text-primary-container/60 uppercase tracking-[0.2em]">Experience</span>
           <div class="flex-1 border-t border-outline-variant/40"></div>
         </div>
-        <div class="space-y-10">
+        <div class="space-y-12">
 
           <article class="border-l-2 border-primary-container/40 pl-5 py-1">
             <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
               <span class="font-headline font-bold text-white text-xl uppercase">Fullstack Developer</span>
-              <span class="font-mono text-sm text-on-surface-variant/70">Jun 2025 — present</span>
+              <span class="font-mono text-sm text-on-surface-variant/80">Jun 2025 — present</span>
             </div>
             <span class="font-mono text-sm text-primary-container/80 uppercase tracking-widest block mb-4">Synecta — Tomsk</span>
-            <p class="text-white/90 text-lg leading-8 max-w-prose mb-4">
+            <p class="text-white/90 text-base leading-relaxed max-w-[72ch] mb-5">
               Software and hardware for radio-frequency measurements. I own the web app for controlling instruments and visualizing measurement data.
             </p>
-            <ul class="text-white/85 text-base leading-7 list-disc list-outside pl-5 space-y-1.5 max-w-prose mb-4">
+            <ul class="text-white/90 text-base leading-relaxed list-disc list-outside pl-5 space-y-2.5 max-w-[72ch] mb-5">
               <li>Designed the frontend architecture around Feature-Sliced Design, simplifying scaling and maintenance.</li>
               <li>Implemented client/server interaction over WebSocket and REST for exchanging data with measurement hardware.</li>
               <li>Integrated vector network analyzers via C++ backend logic over SCPI/HiSLIP.</li>
             </ul>
-            <div class="flex flex-wrap gap-1.5">
-              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
-              <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">React</a>
-              <a href="https://tanstack.com" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TanStack</a>
-              <a href="https://ui.shadcn.com" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">shadcn/ui</a>
-              <a href="https://storybook.js.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Storybook</a>
-              <a href="https://playwright.dev" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Playwright</a>
-              <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">WebSocket</a>
-              <a href="https://en.cppreference.com" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">C++</a>
-              <a href="https://www.ivifoundation.org/specifications/" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">SCPI / HiSLIP</a>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
+              <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">React</a>
+              <a href="https://tanstack.com" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TanStack</a>
+              <a href="https://ui.shadcn.com" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">shadcn/ui</a>
+              <a href="https://storybook.js.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Storybook</a>
+              <a href="https://playwright.dev" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Playwright</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">WebSocket</a>
+              <a href="https://en.cppreference.com" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">C++</a>
+              <a href="https://www.ivifoundation.org/specifications/" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">SCPI / HiSLIP</a>
             </div>
           </article>
 
           <article class="border-l-2 border-primary-container/40 pl-5 py-1">
             <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
               <span class="font-headline font-bold text-white text-xl uppercase">Fullstack Developer</span>
-              <span class="font-mono text-sm text-on-surface-variant/70">Jan 2024 — May 2025</span>
+              <span class="font-mono text-sm text-on-surface-variant/80">Jan 2024 — May 2025</span>
             </div>
             <span class="font-mono text-sm text-primary-container/80 uppercase tracking-widest block mb-4">AdHaven — Tomsk</span>
-            <p class="text-white/90 text-lg leading-8 max-w-prose mb-4">
+            <p class="text-white/90 text-base leading-relaxed max-w-[72ch] mb-5">
               A platform that streamlines collaboration between influencers and advertisers.
             </p>
-            <ul class="text-white/85 text-base leading-7 list-disc list-outside pl-5 space-y-1.5 max-w-prose mb-4">
+            <ul class="text-white/90 text-base leading-relaxed list-disc list-outside pl-5 space-y-2.5 max-w-[72ch] mb-5">
               <li>Led a team of 3 developers: planned tasks, ran code reviews, and owned technical delivery.</li>
               <li>Shipped 3 projects to production in 9 months, aligning technical decisions with business goals.</li>
               <li>Built a Telegram bot for influencer/advertiser interaction — 100+ ad offers processed in the first 3 months.</li>
             </ul>
-            <div class="flex flex-wrap gap-1.5">
-              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
-              <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">React</a>
-              <a href="https://nextjs.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Next.js</a>
-              <a href="https://www.mongodb.com/docs" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MongoDB</a>
-              <a href="https://docs.docker.com" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Docker</a>
-              <a href="https://python-telegram-bot.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">python-telegram-bot</a>
-              <a href="https://docs.gitlab.com/ee/ci/" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">GitLab CI</a>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
+              <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">React</a>
+              <a href="https://nextjs.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Next.js</a>
+              <a href="https://www.mongodb.com/docs" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MongoDB</a>
+              <a href="https://docs.docker.com" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Docker</a>
+              <a href="https://python-telegram-bot.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">python-telegram-bot</a>
+              <a href="https://docs.gitlab.com/ee/ci/" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">GitLab CI</a>
             </div>
           </article>
 
           <article class="border-l-2 border-primary-container/40 pl-5 py-1">
             <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
               <span class="font-headline font-bold text-white text-xl uppercase">Frontend Developer</span>
-              <span class="font-mono text-sm text-on-surface-variant/70">Apr 2023 — Dec 2023</span>
+              <span class="font-mono text-sm text-on-surface-variant/80">Apr 2023 — Dec 2023</span>
             </div>
             <span class="font-mono text-sm text-primary-container/80 uppercase tracking-widest block mb-4">MarPla — Wildberries Analytics</span>
-            <p class="text-white/90 text-lg leading-8 max-w-prose mb-4">
+            <p class="text-white/90 text-base leading-relaxed max-w-[72ch] mb-5">
               Analytics service for Wildberries sellers.
             </p>
-            <ul class="text-white/85 text-base leading-7 list-disc list-outside pl-5 space-y-1.5 max-w-prose mb-4">
+            <ul class="text-white/90 text-base leading-relaxed list-disc list-outside pl-5 space-y-2.5 max-w-[72ch] mb-5">
               <li>Rewrote the frontend in 3 months on a new stack: React, TypeScript, MobX, and InversifyJS.</li>
               <li>Introduced Dependency Injection into the React app, improving testability and extensibility.</li>
               <li>Fixed 50+ bugs, added Jest unit tests for key modules, and mentored 2 interns.</li>
             </ul>
-            <div class="flex flex-wrap gap-1.5">
-              <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">React</a>
-              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
-              <a href="https://mobx.js.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MobX</a>
-              <a href="https://inversify.io" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">InversifyJS</a>
-              <a href="https://webpack.js.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Webpack</a>
-              <a href="https://jestjs.io" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Jest</a>
-              <a href="https://docs.docker.com" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Docker</a>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">React</a>
+              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
+              <a href="https://mobx.js.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MobX</a>
+              <a href="https://inversify.io" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">InversifyJS</a>
+              <a href="https://webpack.js.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Webpack</a>
+              <a href="https://jestjs.io" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Jest</a>
+              <a href="https://docs.docker.com" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Docker</a>
             </div>
           </article>
 
           <article class="border-l-2 border-primary-container/40 pl-5 py-1">
             <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
               <span class="font-headline font-bold text-white text-xl uppercase">Frontend Developer</span>
-              <span class="font-mono text-sm text-on-surface-variant/70">Oct 2021 — Apr 2023</span>
+              <span class="font-mono text-sm text-on-surface-variant/80">Oct 2021 — Apr 2023</span>
             </div>
             <span class="font-mono text-sm text-primary-container/80 uppercase tracking-widest block mb-4">Technology Center of Automatization — Turkmenistan</span>
-            <p class="text-white/90 text-lg leading-8 max-w-prose mb-4">
+            <p class="text-white/90 text-base leading-relaxed max-w-[72ch] mb-5">
               Automation of tax and statistical reporting for companies.
             </p>
-            <ul class="text-white/85 text-base leading-7 list-disc list-outside pl-5 space-y-1.5 max-w-prose mb-4">
+            <ul class="text-white/90 text-base leading-relaxed list-disc list-outside pl-5 space-y-2.5 max-w-[72ch] mb-5">
               <li>Built a web app for electronic company statistics reporting; automation cut paperwork by 40%.</li>
               <li>Created an internal UI kit, speeding up typical interface development by up to 15%.</li>
               <li>Led a group of 3 junior developers: taught frontend fundamentals and ran code reviews.</li>
             </ul>
-            <div class="flex flex-wrap gap-1.5">
-              <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">React</a>
-              <a href="https://redux.js.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Redux</a>
-              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
-              <a href="https://nextjs.org" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Next.js</a>
-              <a href="https://mui.com" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MUI</a>
-              <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Vite</a>
-              <a href="https://docs.docker.com" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-on-surface-variant/80 border border-outline/60 px-2 py-1 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Docker</a>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">React</a>
+              <a href="https://redux.js.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Redux</a>
+              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
+              <a href="https://nextjs.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Next.js</a>
+              <a href="https://mui.com" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MUI</a>
+              <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Vite</a>
+              <a href="https://docs.docker.com" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Docker</a>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-mono text-sm text-primary-container/60 uppercase tracking-[0.2em]">Projects</span>
+          <div class="flex-1 border-t border-outline-variant/40"></div>
+        </div>
+        <div class="space-y-12">
+
+          <article class="border-l-2 border-primary-container/40 pl-5 py-1">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+              <a href="https://github.com/begenchgeldyev/pantheon" target="_blank" rel="noopener noreferrer" class="font-headline font-bold text-white text-xl uppercase hover:text-primary-container transition-colors duration-150">Pantheon</a>
+              <span class="font-mono text-sm text-on-surface-variant/80">Aug 2026 — present</span>
+            </div>
+            <span class="font-mono text-sm text-primary-container/80 uppercase tracking-widest block mb-4">Personal Project — TypeScript / Bun</span>
+            <p class="text-white/90 text-base leading-relaxed max-w-[72ch] mb-5">
+              A private Telegram gateway to an OpenClaw AI agent runtime — chat with multiple AI agents from your phone, with auth, routing, and one agent turn per message.
+            </p>
+            <ul class="text-white/90 text-base leading-relaxed list-disc list-outside pl-5 space-y-2.5 max-w-[72ch] mb-5">
+              <li>Routes messages to multiple AI agents; session keys delegate conversation memory to the agent runtime, so the gateway stays stateless — no database.</li>
+              <li>Layered so the agent runtime is reachable through a single adapter; Telegram, routing, and agent concerns never leak into each other.</li>
+              <li>Hardened by default: numeric-id allowlist, <code>Bun.spawn()</code> with argument arrays instead of shell strings, and JSON logs carrying metadata only — never message bodies.</li>
+            </ul>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
+              <a href="https://bun.sh" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Bun</a>
+              <a href="https://grammy.dev" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">grammY</a>
+              <a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Telegram Bot API</a>
+              <a href="https://systemd.io" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">systemd</a>
             </div>
           </article>
 
@@ -125,13 +159,25 @@
           <span class="font-mono text-sm text-primary-container/60 uppercase tracking-[0.2em]">Education</span>
           <div class="flex-1 border-t border-outline-variant/40"></div>
         </div>
-        <article class="border-l-2 border-primary-container/40 pl-5 py-1">
-          <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
-            <span class="font-headline font-bold text-white text-xl uppercase">B.S. Applied Informatics</span>
-            <span class="font-mono text-sm text-on-surface-variant/70">2022 — 2026</span>
-          </div>
-          <span class="font-mono text-xs text-primary-container/80 uppercase tracking-widest block">Tomsk State University — Institute of Applied Mathematics and Computer Science</span>
-        </article>
+        <div class="space-y-12">
+
+          <article class="border-l-2 border-primary-container/40 pl-5 py-1">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+              <span class="font-headline font-bold text-white text-xl uppercase">M.S. Applied Informatics</span>
+              <span class="font-mono text-sm text-on-surface-variant/80">2026 — 2028</span>
+            </div>
+            <span class="font-mono text-[13px] text-primary-container/80 uppercase tracking-widest block">Tomsk State University — Institute of Applied Mathematics and Computer Science</span>
+          </article>
+
+          <article class="border-l-2 border-primary-container/40 pl-5 py-1">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+              <span class="font-headline font-bold text-white text-xl uppercase">B.S. Applied Informatics</span>
+              <span class="font-mono text-sm text-on-surface-variant/80">2022 — 2026</span>
+            </div>
+            <span class="font-mono text-[13px] text-primary-container/80 uppercase tracking-widest block">Tomsk State University — Institute of Applied Mathematics and Computer Science</span>
+          </article>
+
+        </div>
       </section>
 
     </div>
@@ -147,38 +193,48 @@
         </div>
         <div class="space-y-5">
           <div>
+            <p class="font-mono text-sm text-secondary/70 uppercase tracking-widest mb-3">AI &amp; Agents</p>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://claude.com/claude-code" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Claude Code</a>
+              <a href="https://opencode.ai" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">OpenCode</a>
+              <a href="https://openclaw.ai" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">OpenClaw</a>
+              <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MCP</a>
+              <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Agent Skills</a>
+            </div>
+          </div>
+          <div>
             <p class="font-mono text-sm text-secondary/70 uppercase tracking-widest mb-3">Frontend &amp; Backend</p>
             <div class="flex flex-wrap gap-2">
-              <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">React</a>
-              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
-              <a href="https://nextjs.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Next.js</a>
-              <a href="https://tanstack.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TanStack</a>
-              <a href="https://redux.js.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Redux</a>
-              <a href="https://mobx.js.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MobX</a>
-              <a href="https://zustand.docs.pmnd.rs" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Zustand</a>
-              <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Tailwind</a>
-              <a href="https://ui.shadcn.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">shadcn/ui</a>
-              <a href="https://storybook.js.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Storybook</a>
-              <a href="https://nodejs.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Node.js</a>
-              <a href="https://bun.sh" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Bun</a>
-              <a href="https://www.mongodb.com/docs" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MongoDB</a>
-              <a href="https://www.postgresql.org/docs" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">PostgreSQL</a>
-              <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">WebSocket</a>
-              <a href="https://en.cppreference.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">C / C++</a>
+              <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">React</a>
+              <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
+              <a href="https://nextjs.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Next.js</a>
+              <a href="https://tanstack.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TanStack</a>
+              <a href="https://redux.js.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Redux</a>
+              <a href="https://mobx.js.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MobX</a>
+              <a href="https://zustand.docs.pmnd.rs" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Zustand</a>
+              <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Tailwind</a>
+              <a href="https://ui.shadcn.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">shadcn/ui</a>
+              <a href="https://storybook.js.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Storybook</a>
+              <a href="https://nodejs.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Node.js</a>
+              <a href="https://bun.sh" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Bun</a>
+              <a href="https://www.mongodb.com/docs" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">MongoDB</a>
+              <a href="https://www.postgresql.org/docs" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">PostgreSQL</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">WebSocket</a>
+              <a href="https://en.cppreference.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">C / C++</a>
             </div>
           </div>
           <div>
             <p class="font-mono text-sm text-secondary/70 uppercase tracking-widest mb-3">Tooling &amp; Testing</p>
             <div class="flex flex-wrap gap-2">
-              <a href="https://vitest.dev" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Vitest</a>
-              <a href="https://jestjs.io" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Jest</a>
-              <a href="https://playwright.dev" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Playwright</a>
-              <a href="https://docs.docker.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Docker</a>
-              <a href="https://git-scm.com/doc" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Git</a>
-              <a href="https://www.kernel.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Linux</a>
-              <a href="https://biomejs.dev" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Biome</a>
-              <a href="https://neovim.io" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Neovim</a>
-              <a href="https://www.figma.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline px-2.5 py-1 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Figma</a>
+              <a href="https://vitest.dev" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Vitest</a>
+              <a href="https://jestjs.io" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Jest</a>
+              <a href="https://playwright.dev" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Playwright</a>
+              <a href="https://docs.docker.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Docker</a>
+              <a href="https://git-scm.com/doc" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Git</a>
+              <a href="https://www.kernel.org" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Linux</a>
+              <a href="https://biomejs.dev" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Biome</a>
+              <a href="https://neovim.io" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Neovim</a>
+              <a href="https://www.figma.com" target="_blank" rel="noopener noreferrer" class="text-sm font-mono border border-outline/50 px-2.5 py-1.5 text-white/90 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Figma</a>
             </div>
           </div>
         </div>
@@ -215,11 +271,11 @@
         <div class="pt-4 border-t border-outline-variant/40 space-y-2">
           <div class="flex items-baseline justify-between">
             <span class="font-mono text-base text-white/90">Russian</span>
-            <span class="font-mono text-sm text-on-surface-variant/70 uppercase tracking-widest">Native</span>
+            <span class="font-mono text-sm text-on-surface-variant/80 uppercase tracking-widest">Native</span>
           </div>
           <div class="flex items-baseline justify-between">
             <span class="font-mono text-base text-white/90">English</span>
-            <span class="font-mono text-sm text-on-surface-variant/70 uppercase tracking-widest">C1</span>
+            <span class="font-mono text-sm text-on-surface-variant/80 uppercase tracking-widest">C1</span>
           </div>
         </div>
       </section>
