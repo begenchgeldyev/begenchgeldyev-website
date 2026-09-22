@@ -1,6 +1,7 @@
 import { canAccess, enforce, resolveEmail } from '@bg/core/abac/pep';
 import { container } from './app-container';
 import { resolveLang } from './i18n';
+import { handleLangRequest } from './lang-route';
 import { ProjectController } from './project/project.controller';
 import { renderPage, servePublicAsset } from './site';
 
@@ -40,6 +41,9 @@ Bun.serve({
           const cookie = `dev-user-email=${encodeURIComponent(email)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`;
           return Response.json({ ok: true }, { headers: { 'Set-Cookie': cookie } });
         },
+      },
+      '/lang': {
+        POST: (req: Request) => handleLangRequest(req),
       },
       '/auth/logout': {
         POST: () => {

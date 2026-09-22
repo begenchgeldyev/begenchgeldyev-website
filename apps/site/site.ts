@@ -124,8 +124,34 @@ async function renderHeader(config: PageConfig, lang: Lang) {
     ? `<span class="material-symbols-outlined cursor-pointer hover:text-primary-container transition-colors">terminal</span>`
     : '';
 
+  const langButtons = (['en', 'ru'] as const)
+    .map((code) => {
+      const active = code === lang;
+      const classes = active ? 'text-primary-container font-semibold' : 'text-white/80 hover:text-primary-container transition-colors';
+      return `<button type="button" data-lang="${code}" aria-pressed="${active}" class="${classes}">${code}</button>`;
+    })
+    .join('<span class="text-outline-variant/60" aria-hidden="true">|</span>');
+
+  const langToggle = `<div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest" role="group" aria-label="${t(lang, 'langToggleLabel')}">${langButtons}</div>
+<script>
+  document.querySelectorAll('[data-lang]').forEach((el) => {
+    const switchTo = async () => {
+      await fetch('/api/lang', { method: 'POST', body: el.dataset.lang });
+      location.reload();
+    };
+    el.addEventListener('mousedown', switchTo);
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        switchTo();
+      }
+    });
+  });
+</script>`;
+
   return renderComponentTemplate('site-header.html', {
     brand,
+    langToggle,
     navLinks: [
       renderNavLink(config.activeNav, '/projects', t(lang, 'navProjects'), 'projects'),
       renderNavLink(config.activeNav, '/logs', t(lang, 'navLogs'), 'logs'),
