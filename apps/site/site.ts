@@ -1,10 +1,11 @@
 import { extname, join, normalize, sep } from 'node:path';
+import { type Lang, localizedFragmentFile } from './i18n';
 
 type NavKey = 'projects' | 'logs' | 'cv';
 type FooterVariant = 'default' | 'home';
 
 type PageConfig = {
-  title: string;
+  title: Record<Lang, string>;
   fragmentFile: string;
   activeNav?: NavKey;
   brandIsLink?: boolean;
@@ -41,7 +42,7 @@ const MIME: Record<string, string> = {
 
 const PAGE_CONFIGS: Record<string, PageConfig> = {
   '/': {
-    title: 'begenchgeldyev',
+    title: { en: 'begenchgeldyev', ru: 'begenchgeldyev' },
     fragmentFile: 'index.html',
     brandIsLink: false,
     footerVariant: 'home',
@@ -49,7 +50,7 @@ const PAGE_CONFIGS: Record<string, PageConfig> = {
     selectionTextClass: 'selection:text-on-primary-fixed',
   },
   '/cv': {
-    title: 'CV — BEGENCH_GELDYEV@ROOT:~$',
+    title: { en: 'CV — BEGENCH_GELDYEV@ROOT:~$', ru: 'РЕЗЮМЕ — BEGENCH_GELDYEV@ROOT:~$' },
     fragmentFile: 'cv.html',
     activeNav: 'cv',
     brandIsLink: true,
@@ -58,7 +59,7 @@ const PAGE_CONFIGS: Record<string, PageConfig> = {
     showTerminalIcon: true,
   },
   '/logs': {
-    title: 'LOGS — BEGENCH_GELDYEV@ROOT:~$',
+    title: { en: 'LOGS — BEGENCH_GELDYEV@ROOT:~$', ru: 'ЛОГИ — BEGENCH_GELDYEV@ROOT:~$' },
     fragmentFile: 'logs.html',
     activeNav: 'logs',
     brandIsLink: true,
@@ -66,7 +67,7 @@ const PAGE_CONFIGS: Record<string, PageConfig> = {
     showTerminalIcon: true,
   },
   '/projects': {
-    title: 'PROJECTS — BEGENCH_GELDYEV@ROOT:~$',
+    title: { en: 'PROJECTS — BEGENCH_GELDYEV@ROOT:~$', ru: 'ПРОЕКТЫ — BEGENCH_GELDYEV@ROOT:~$' },
     fragmentFile: 'projects.html',
     activeNav: 'projects',
     brandIsLink: true,
@@ -110,7 +111,7 @@ function renderNavLink(activeNav: NavKey | undefined, href: string, label: strin
   return `<a class="${classes}" href="${href}"${current}>${label}</a>`;
 }
 
-async function renderHeader(config: PageConfig) {
+async function renderHeader(config: PageConfig, _lang: Lang) {
   const brand = config.brandIsLink
     ? `<a href="/" class="text-[#00FF41] font-mono font-bold tracking-widest text-sm hover:opacity-80 transition-opacity">
       begench@127.0.0.1
@@ -134,7 +135,7 @@ async function renderHeader(config: PageConfig) {
   });
 }
 
-async function renderFooter(config: PageConfig) {
+async function renderFooter(config: PageConfig, _lang: Lang) {
   if (config.footerVariant === 'home') {
     return renderComponentTemplate('footer-home.html');
   }
@@ -146,20 +147,21 @@ async function renderFooter(config: PageConfig) {
   return renderComponentTemplate('footer-default.html', { cvLink });
 }
 
-async function renderLayout(config: PageConfig, content: string, userEmail?: string | null) {
+async function renderLayout(config: PageConfig, content: string, lang: Lang, userEmail?: string | null) {
   const selectionTextClass = config.selectionTextClass ?? 'selection:text-on-primary-container';
   return renderComponentTemplate('document.html', {
     content,
-    footer: await renderFooter(config),
-    header: await renderHeader(config),
+    footer: await renderFooter(config, lang),
+    header: await renderHeader(config, lang),
+    lang,
     selectionTextClass,
     sharedHead: await renderSharedHead(userEmail),
-    title: config.title,
+    title: config.title[lang],
   });
 }
 
-export async function renderDocument(config: PageConfig, content: string, userEmail?: string | null) {
-  return renderLayout(config, content, userEmail);
+export async function renderDocument(config: PageConfig, content: string, lang: Lang, userEmail?: string | null) {
+  return renderLayout(config, content, lang, userEmail);
 }
 
 async function resolveIncludes(html: string): Promise<string> {
@@ -174,20 +176,22 @@ async function resolveIncludes(html: string): Promise<string> {
   return html;
 }
 
-export async function renderPage(pathname: string, userEmail?: string | null): Promise<Response | null> {
+export async function renderPage(pathname: string, lang: Lang, userEmail?: string | null): Promise<Response | null> {
   const config = PAGE_CONFIGS[pathname];
   if (!config) {
     return null;
   }
 
-  const fragmentPath = join(PAGES_DIR, config.fragmentFile);
-  const fragment = Bun.file(fragmentPath);
+  const localized = Bun.file(join(PAGES_DIR, localizedFragmentFile(config.fragmentFile, lang)));
+  const fallback = Bun.file(join(PAGES_DIR, config.fragmentFile));
+  const fragment = (await localized.exists()) ? localized : fallback;
+
   if (!(await fragment.exists())) {
     return new Response('Not Found', { status: 404 });
   }
 
   const content = await resolveIncludes(await fragment.text());
-  return new Response(await renderLayout(config, content, userEmail), {
+  return new Response(await renderLayout(config, content, lang, userEmail), {
     headers: { 'Content-Type': 'text/html; charset=utf-8' },
   });
 }

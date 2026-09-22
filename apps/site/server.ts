@@ -1,7 +1,8 @@
 import { canAccess, enforce, resolveEmail } from '@bg/core/abac/pep';
+import { container } from './app-container';
+import { resolveLang } from './i18n';
 import { ProjectController } from './project/project.controller';
 import { renderPage, servePublicAsset } from './site';
-import { container } from './app-container';
 
 const PORT = Number(process.env.PORT) || 8613;
 
@@ -77,7 +78,7 @@ Bun.serve({
       return container.resolve(ProjectController).getPageById(req, Number(projectDetailMatch[1]));
     }
 
-    const page = await renderPage(pathname, resolveEmail(req));
+    const page = await renderPage(pathname, resolveLang(req), resolveEmail(req));
     if (page) {
       return page;
     }

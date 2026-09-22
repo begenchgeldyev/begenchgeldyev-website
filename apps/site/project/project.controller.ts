@@ -1,4 +1,5 @@
-import { canAccess, resolveEmail, Injectable, type ProjectsRepository } from '@bg/core';
+import { canAccess, Injectable, type ProjectsRepository, resolveEmail } from '@bg/core';
+import { resolveLang } from '../i18n';
 import { renderComponentTemplate, renderDocument } from '../site';
 
 type ProjectRecord = Awaited<ReturnType<ProjectsRepository['list']>>[number];
@@ -133,12 +134,8 @@ async function renderProjectPage(req: Request, project: ProjectRecord, canEdit: 
     createdAt: escapeHtml(createdAt),
     description: escapeHtml(description),
     editor: canEdit ? `${await renderProjectEditor()}${await renderProjectEditorScript(project)}` : '',
-    headerEditableAttrs: canEdit
-      ? 'data-admin-editable="header"'
-      : '',
-    contentEditableAttrs: canEdit
-      ? 'data-admin-editable="content"'
-      : '',
+    headerEditableAttrs: canEdit ? 'data-admin-editable="header"' : '',
+    contentEditableAttrs: canEdit ? 'data-admin-editable="content"' : '',
     imageBlock,
     projectId: String(project.id),
     projectName: escapeHtml(project.name),
@@ -147,10 +144,12 @@ async function renderProjectPage(req: Request, project: ProjectRecord, canEdit: 
     visibility: escapeHtml(visibility),
   });
 
+  const projectTitle = `${project.name.toUpperCase()} — BEGENCH_GELDYEV@ROOT:~$`;
+
   return new Response(
     await renderDocument(
       {
-        title: `${project.name.toUpperCase()} — BEGENCH_GELDYEV@ROOT:~$`,
+        title: { en: projectTitle, ru: projectTitle },
         fragmentFile: 'projects.html',
         activeNav: 'projects',
         brandIsLink: true,
@@ -158,6 +157,7 @@ async function renderProjectPage(req: Request, project: ProjectRecord, canEdit: 
         showTerminalIcon: true,
       },
       contentHtml,
+      resolveLang(req),
       resolveEmail(req),
     ),
     {
