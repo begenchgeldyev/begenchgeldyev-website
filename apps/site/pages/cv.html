@@ -151,6 +151,31 @@
             </div>
           </article>
 
+          <article class="border-l-2 border-primary-container/40 pl-5 py-1">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+              <span class="font-headline font-bold text-white text-xl uppercase">ARM64 CI Framework</span>
+              <span class="font-mono text-sm text-on-surface-variant/80">2026</span>
+            </div>
+            <span class="font-mono text-sm text-primary-container/80 uppercase tracking-widest block mb-4">Bachelor's Thesis — Python / gem5 / Jenkins</span>
+            <p class="text-white/90 text-base leading-relaxed max-w-[72ch] mb-5">
+              A framework that runs ARM64 builds inside a gem5 full-system simulation on ordinary x86_64 CI agents, so cross-architecture builds need neither ARM hardware nor cloud instances.
+            </p>
+            <ul class="text-white/90 text-base leading-relaxed list-disc list-outside pl-5 space-y-2.5 max-w-[72ch] mb-5">
+              <li>Boots a full Debian ARM64 guest under gem5 and drives it from Python: the environment is declared in YAML, an orchestrator owns the simulation lifecycle, and artifacts move over SSH. Binaries it produced were verified on real Raspberry Pi 4 hardware.</li>
+              <li>The guest is split across two disks — an immutable 2 GB base and a 4 GB build overlay mounted into a chroot — so toolchain updates never touch the base image and builds stay reproducible.</li>
+              <li>Cut cycle time by 40%, from 14.6 to 8.7 minutes, by restoring gem5 checkpoints instead of cold-booting (382 s to 28 s); ccache inside the chroot took another 30–50% off incremental builds.</li>
+              <li>Shipped as a Jenkins Shared Library, so a pipeline calls one declarative step. A month of operation logged 147 ARM64 builds at a 94.2% success rate.</li>
+            </ul>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://www.python.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Python</a>
+              <a href="https://www.gem5.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">gem5</a>
+              <a href="https://www.jenkins.io" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Jenkins</a>
+              <a href="https://www.debian.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Debian</a>
+              <a href="https://www.qemu.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">QEMU</a>
+              <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Bash</a>
+            </div>
+          </article>
+
         </div>
       </section>
 
