@@ -134,12 +134,13 @@
             </div>
             <span class="font-mono text-sm text-primary-container/80 uppercase tracking-widest block mb-4">Personal Project — TypeScript / OpenClaw</span>
             <p class="text-white/90 text-base leading-relaxed max-w-[72ch] mb-5">
-              A private Telegram gateway to an OpenClaw AI agent runtime — chat with multiple AI agents from your phone, with auth, routing, and one agent turn per message.
+              A Telegram gateway for working with OpenClaw agents, built for a small circle of users.
             </p>
             <ul class="text-white/90 text-base leading-relaxed list-disc list-outside pl-5 space-y-2.5 max-w-[72ch] mb-5">
-              <li>Routes messages to multiple AI agents; session keys delegate conversation memory to the agent runtime, so the gateway stays stateless — no database.</li>
-              <li>Layered so the agent runtime is reachable through a single adapter; Telegram, routing, and agent concerns never leak into each other.</li>
-              <li>Hardened by default: numeric-id allowlist, <code>Bun.spawn()</code> with argument arrays instead of shell strings, and JSON logs carrying metadata only — never message bodies.</li>
+              <li>On first contact, every allowed user automatically gets their own isolated agent, with its own workspace, memory, session history and reminders — no data is shared between users.</li>
+              <li>The system identifies the type of request and routes the message to the right agent. A reminder a user creates is stored and delivered back to the same Telegram chat at the right moment.</li>
+              <li>The architecture is split into independent components. All interaction with the OpenClaw runtime goes through a single CLI adapter, so the rest of the system does not depend on how the agents work internally.</li>
+              <li>The core components are covered by 102 tests across 13 modules, with message routing, user-agent provisioning and the Telegram transport each tested separately.</li>
             </ul>
             <div class="flex flex-wrap gap-2">
               <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">TypeScript</a>
