@@ -1,0 +1,208 @@
+		<script>
+		(() => {
+			const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+			const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+			const now = new Date();
+			const pad = (n) => String(n).padStart(2, "0");
+			const loginStr = `Last login: ${days[now.getDay()]} ${months[now.getMonth()]} ${now.getDate()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} on ttys001`;
+			document.getElementById("last-login").textContent = loginStr;
+
+			const body = document.getElementById("terminal-body");
+			const inputLine = document.getElementById("input-line");
+			const input = document.getElementById("terminal-input");
+			const display = document.getElementById("terminal-display");
+			const PROMPT = '<span class="text-primary-container font-bold">begench@127.0.0.1/$</span>';
+			const history = [];
+			let histIdx = -1;
+
+			// keep hidden input focused whenever terminal is clicked
+			document.getElementById("terminal-wrap").addEventListener("click", () => input.focus());
+
+			function syncDisplay() {
+				display.textContent = input.value;
+			}
+
+			const FILES = {
+				"philosophy.txt": `<div class="text-primary-container/90 space-y-1 pl-2">
+      <div>&gt; Performance is not a feature; it is a fundamental requirement.</div>
+      <div>&gt; Code should be as readable as prose and as robust as industrial steel.</div>
+      <div>&gt; User experience is the ultimate metric of success in any technical architecture.</div>
+    </div>`,
+				"skills.txt": `<div class="text-on-surface-variant/90 space-y-1 pl-2">
+      <div><span class="text-secondary">frontend:</span>  React, TypeScript, HTMX, Tailwind CSS</div>
+      <div><span class="text-secondary">backend:</span>   Go, Node.js, Bun, REST, gRPC</div>
+      <div><span class="text-secondary">tools:</span>     Neovim, Tmux, Git, Docker, Linux</div>
+      <div><span class="text-secondary">databases:</span> PostgreSQL, MongoDB, Redis</div>
+    </div>`,
+				"contact.txt": `<div class="text-on-surface-variant/90 space-y-1 pl-2">
+      <div><span class="text-secondary">email:</span>    begenchgeldyev@gmail.com</div>
+      <div><span class="text-secondary">github:</span>   github.com/begenchgeldyev</div>
+      <div><span class="text-secondary">linkedin:</span> linkedin.com/in/begench-geldyev</div>
+    </div>`,
+			};
+
+			const LS_OUTPUT = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 text-on-surface-variant/80 pl-2 space-y-0.5">
+      <span>drwxr-xr-x  root  philosophy.txt</span>
+      <span>drwxr-xr-x  root  skills.txt</span>
+      <span>drwxr-xr-x  root  contact.txt</span>
+      <span>drwxr-xr-x  root  experiments/</span>
+    </div>`;
+
+			const COMMANDS = {
+				help() {
+					const row = (cmd, desc) =>
+						`<div><span class="text-primary-container">${cmd.padEnd(26)}</span><span class="text-on-surface-variant/90">${desc}</span></div>`;
+					return (
+						`<div class="pl-2 space-y-1" style="white-space:pre;">` +
+						row("help", "show this message") +
+						row("whoami", "about me") +
+						row("ls", "list files") +
+						row("cat [file]", "read a file") +
+						row("uptime", "system uptime") +
+						row("projects", "go to projects") +
+						row("logs", "go to logs") +
+						row("open [github|linkedin|cv]", "open link") +
+						row("clear", "clear terminal") +
+						`</div>`
+					);
+				},
+
+				whoami() {
+					return `<div class="text-on-surface-variant/90 space-y-1 pl-2">
+      <div><span class="text-secondary font-bold">NAME:&nbsp;&nbsp;</span> Begench Geldyev / Software Engineer</div>
+      <div><span class="text-secondary font-bold">FOCUS:&nbsp;</span> React, TypeScript, Go, web performance</div>
+      <div><span class="text-secondary font-bold">ENV:&nbsp;&nbsp;&nbsp;</span> Neovim + Tmux + Linux</div>
+      <div><span class="text-secondary font-bold">STATUS:</span> Building high-fidelity interfaces &amp; backend systems.</div>
+    </div>`;
+				},
+
+				ls() {
+					return LS_OUTPUT;
+				},
+
+				cat(args) {
+					const file = args[0];
+					if (!file) return err("cat: missing operand");
+					if (FILES[file]) return FILES[file];
+					return err(`cat: ${file}: No such file or directory`);
+				},
+
+				uptime() {
+					const s = Math.floor(performance.now() / 1000);
+					const h = Math.floor(s / 3600),
+						m = Math.floor((s % 3600) / 60),
+						sec = s % 60;
+					return `<span class="text-on-surface-variant/80 pl-2">${new Date().toLocaleTimeString()} up ${h}h ${m}m ${sec}s, 1 user, load average: 0.42, 0.31, 0.18</span>`;
+				},
+
+				clear() {
+					[...body.children].forEach((el) => {
+						if (el !== inputLine) el.remove();
+					});
+					setTimeout(() => input.focus(), 0);
+					return null;
+				},
+
+				projects() {
+					setTimeout(() => (window.location.href = "/projects"), 300);
+					return '<span class="text-primary-container/70 pl-2">Navigating to /projects...</span>';
+				},
+
+				logs() {
+					setTimeout(() => (window.location.href = "/logs"), 300);
+					return '<span class="text-primary-container/70 pl-2">Navigating to /logs...</span>';
+				},
+
+				open(args) {
+					const target = args[0];
+					const links = {
+						github: "https://github.com/begenchgeldyev",
+						linkedin: "https://linkedin.com/in/begench-geldyev",
+						cv: "/public/Begench%20Geldyev(CV).pdf",
+					};
+					if (!target) return err("open: specify target — github | linkedin | cv");
+					if (!links[target]) return err(`open: unknown target '${target}'`);
+					window.open(links[target], "_blank");
+					return `<span class="text-primary-container/70 pl-2">Opening ${target}...</span>`;
+				},
+			};
+
+			function err(msg) {
+				return `<span class="text-error/80 pl-2">${msg}</span>`;
+			}
+
+			function appendLine(html) {
+				const div = document.createElement("div");
+				div.innerHTML = html;
+				// insert before the input line so input stays at the bottom
+				body.insertBefore(div, inputLine);
+				body.scrollTop = body.scrollHeight;
+			}
+
+			function run(raw) {
+				const trimmed = raw.trim();
+
+				// always echo the prompt + command (even blank Enter)
+				appendLine(`<div class="flex gap-2 mt-2">${PROMPT} <span class="text-white">${trimmed.replace(/</g, "&lt;")}</span></div>`);
+				if (!trimmed) return;
+
+				const [cmd, ...args] = trimmed.split(/\s+/);
+				const fn = COMMANDS[cmd];
+				let output;
+
+				if (fn) {
+					output = fn(args);
+				} else {
+					output = err(`${cmd}: command not found — type <span class="text-primary-container">help</span>`);
+				}
+
+				if (output !== null && output !== undefined) {
+					appendLine(`<div class="pb-1">${output}</div>`);
+				}
+			}
+
+			input.addEventListener("input", syncDisplay);
+
+			input.addEventListener("keydown", (e) => {
+				if (e.key === "Enter") {
+					const val = input.value;
+					history.unshift(val);
+					histIdx = -1;
+					input.value = "";
+					syncDisplay();
+					run(val);
+				} else if (e.key === "ArrowUp") {
+					e.preventDefault();
+					if (histIdx < history.length - 1) histIdx++;
+					input.value = history[histIdx] ?? "";
+					syncDisplay();
+				} else if (e.key === "ArrowDown") {
+					e.preventDefault();
+					if (histIdx > 0) histIdx--;
+					else {
+						histIdx = -1;
+						input.value = "";
+						syncDisplay();
+						return;
+					}
+					input.value = history[histIdx] ?? "";
+					syncDisplay();
+				} else if (e.key === "Tab") {
+					e.preventDefault();
+					const parts = input.value.split(/\s+/);
+					const partial = parts[0];
+					const allCmds = Object.keys(COMMANDS);
+					const matches = allCmds.filter((c) => c.startsWith(partial) && c !== partial);
+					if (matches.length === 1) {
+						input.value = matches[0] + (parts.length > 1 ? " " + parts.slice(1).join(" ") : "");
+					} else if (matches.length > 1) {
+						appendLine(`<div class="flex gap-2 mt-2">${PROMPT} <span class="text-white">${partial.replace(/</g, "&lt;")}</span></div>`);
+						appendLine(`<div class="text-on-surface-variant/70 pl-2 pb-1">${matches.join("  ")}</div>`);
+					}
+				} else if (e.key === "l" && e.ctrlKey) {
+					e.preventDefault();
+					COMMANDS.clear();
+				}
+			});
+		})();
+		</script>

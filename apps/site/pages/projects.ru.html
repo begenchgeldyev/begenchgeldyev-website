@@ -1,0 +1,24 @@
+<main class="max-w-6xl mx-auto px-8 py-20 min-h-screen">
+  <!-- Page Header -->
+  <div class="mb-16 border-b border-outline-variant/70 pb-10">
+    <div class="max-w-3xl space-y-5">
+      <div class="inline-flex items-center gap-3 font-mono text-[11px] font-bold uppercase tracking-[0.32em] text-primary-container">
+        <span class="h-px w-10 bg-primary-container/80"></span>
+        <span>Архив проектов</span>
+      </div>
+      <div class="space-y-4">
+        <h1 class="text-5xl md:text-7xl font-headline font-black uppercase tracking-[-0.06em] leading-none text-white">Проекты</h1>
+        <p class="max-w-2xl border-l-2 border-primary-container/70 pl-4 font-mono text-sm md:text-base leading-7 text-on-surface-variant">
+          Продакшн-системы и экспериментальные инструменты, поданные с той же точностью, что и работа за ними.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-6" hx-get="/api/projects" hx-trigger="load" hx-swap="innerHTML">
+    <div class="md:col-span-12 flex items-center justify-center py-20">
+      <span class="font-mono text-on-surface-variant text-sm">Загружаю проекты...</span>
+    </div>
+  </div>
+</main>

@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'bun:test';
+import { localizedFragmentFile } from './i18n';
 import { renderPage } from './site';
 
 describe('renderPage language selection', () => {
@@ -9,9 +10,10 @@ describe('renderPage language selection', () => {
     expect(html).toContain('Experience');
   });
 
-  test('falls back to the English fragment when the translation is absent', async () => {
-    const res = await renderPage('/logs', 'ru');
-    expect(res).not.toBeNull();
+  test('derives the translated filename and still serves 200', async () => {
+    expect(localizedFragmentFile('nonexistent.html', 'ru')).toBe('nonexistent.ru.html');
+
+    const res = await renderPage('/cv', 'ru');
     expect((res as Response).status).toBe(200);
   });
 
@@ -55,5 +57,35 @@ describe('chrome translation', () => {
     const res = await renderPage('/cv', 'ru');
     const html = await (res as Response).text();
     expect(html).toContain('CV.pdf');
+  });
+});
+
+describe('russian fragments', () => {
+  test('serves Russian CV prose', async () => {
+    const res = await renderPage('/cv', 'ru');
+    const html = await (res as Response).text();
+    expect(html).toContain('Опыт');
+    expect(html).not.toContain('Software and hardware for radio-frequency');
+  });
+
+  test('keeps stack names untranslated', async () => {
+    const res = await renderPage('/cv', 'ru');
+    const html = await (res as Response).text();
+    expect(html).toContain('Feature-Sliced Design');
+    expect(html).toContain('TypeScript');
+    expect(html).toContain('SCPI / HiSLIP');
+  });
+
+  test('still serves English prose on the English page', async () => {
+    const res = await renderPage('/cv', 'en');
+    const html = await (res as Response).text();
+    expect(html).toContain('Software and hardware for radio-frequency');
+  });
+
+  test('serves Russian copy on the home page', async () => {
+    const res = await renderPage('/', 'ru');
+    const html = await (res as Response).text();
+    expect(html).toContain('Избранные работы');
+    expect(html).toContain('terminal-display');
   });
 });
