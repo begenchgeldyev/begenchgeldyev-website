@@ -15,6 +15,11 @@ COPY packages/core ./packages/core
 
 WORKDIR /usr/src/app/apps/site
 
+# Commit this image was built from. Deploy verification reads it back over HTTP
+# to prove the running container is the one CI just built.
+ARG GIT_SHA=unknown
+ENV GIT_SHA=$GIT_SHA
+
 ENV NODE_ENV=production
 EXPOSE 8613
 

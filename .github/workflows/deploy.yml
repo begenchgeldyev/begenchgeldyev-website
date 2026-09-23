@@ -15,7 +15,30 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          envs: GIT_SHA
           script: |
-            cd /opt/apps/begenchgeldyev-website
-            git pull origin main
-            docker compose -f infra/compose.yml up --build -d
+            set -euo pipefail
+            REPO=/opt/apps/begenchgeldyev-website
+            git config --global --replace-all safe.directory "$REPO"
+            cd "$REPO"
+            git fetch --prune origin main
+            git reset --hard "$GIT_SHA"
+            docker compose -f infra/compose.yml up --build -d --remove-orphans
+        env:
+          GIT_SHA: ${{ github.sha }}
+
+      - name: Verify the running site serves this commit
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 20); do
+            live=$(curl -sf --max-time 10 https://begenchgeldyev.com/api/version \
+              | sed -n 's/.*"sha":"\([^"]*\)".*/\1/p') || live=""
+            if [ "$live" = "$GITHUB_SHA" ]; then
+              echo "live commit matches: $live"
+              exit 0
+            fi
+            echo "attempt $attempt: live='$live' expected='$GITHUB_SHA'"
+            sleep 6
+          done
+          echo "::error::Site is not serving $GITHUB_SHA after 2 minutes."
+          exit 1

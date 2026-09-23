@@ -20,6 +20,8 @@ services:
     build:
       context: ..
       dockerfile: apps/site/Dockerfile
+      args:
+        GIT_SHA: ${GIT_SHA:-unknown}
     restart: unless-stopped
     env_file:
       - ./site.env

@@ -15,6 +15,7 @@ Bun.serve({
   port: PORT,
   routes: Object.assign(
     withPrefix('/api', {
+      '/version': () => Response.json({ sha: process.env.GIT_SHA ?? 'unknown' }),
       '/title': () => {
         const title = ['Javascript Ninja', 'VIM enjoyer', 'Software Engineer', 'Fullstack Developer'];
         const randomTitleIndex = Math.floor(Math.random() * title.length);
