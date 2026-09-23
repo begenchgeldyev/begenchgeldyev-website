@@ -26,6 +26,15 @@ describe('renderPage language selection', () => {
   });
 });
 
+describe('include resolution', () => {
+  test('resolves an include whose filename contains a hyphen', async () => {
+    const res = await renderPage('/cv', 'en');
+    const html = await (res as Response).text();
+    expect(html).toContain('mouseenter');
+    expect(html).not.toContain('#include');
+  });
+});
+
 describe('chrome translation', () => {
   test('renders English navigation labels by default', async () => {
     const res = await renderPage('/cv', 'en');

@@ -191,7 +191,7 @@ export async function renderDocument(config: PageConfig, content: string, lang: 
 }
 
 async function resolveIncludes(html: string): Promise<string> {
-  const includeRe = /<!--#include\s+([^-]+?)-->/g;
+  const includeRe = /<!--#include\s+(.+?)\s*-->/g;
   const matches = [...html.matchAll(includeRe)];
   for (const match of matches) {
     const componentPath = join(COMPONENTS_DIR, match[1].trim());
