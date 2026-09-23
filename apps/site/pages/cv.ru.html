@@ -176,6 +176,29 @@
             </div>
           </article>
 
+          <article class="border-l-2 border-primary-container/40 pl-5 py-1">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+              <a href="https://github.com/begenchgeldyev/interpreter" target="_blank" rel="noopener noreferrer" class="font-headline font-bold text-white text-xl uppercase hover:text-primary-container transition-colors duration-150">Интерпретатор</a>
+              <span class="font-mono text-sm text-on-surface-variant/80">2025</span>
+            </div>
+            <span class="font-mono text-sm text-primary-container/80 uppercase tracking-widest block mb-4">C++ / LL(1) / ОПН</span>
+            <p class="text-white/90 text-base leading-relaxed max-w-[72ch] mb-5">
+              Интерпретатор небольшого языка программирования, заданного собственной контекстно-свободной грамматикой: лексический анализ, LL(1)-разбор и исполнение обратной польской записи.
+            </p>
+            <ul class="text-white/90 text-base leading-relaxed list-disc list-outside pl-5 space-y-2.5 max-w-[72ch] mb-5">
+              <li>Разбирает вход LL(1)-анализатором по таблице переходов и строит обратную польскую запись в том же проходе, а не обходит отдельно построенное дерево.</li>
+              <li>Исполняет полученную запись: арифметика, условные переходы, циклы while и статические массивы.</li>
+              <li>Грамматика заранее формализована в БНФ с таблицами переходов и генерации ОПН, поэтому разбор следует письменной спецификации, а не набору частных правил.</li>
+            </ul>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://en.cppreference.com" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">C++</a>
+              <a href="https://www.gnu.org/software/make/" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">Make</a>
+              <a href="https://en.wikipedia.org/wiki/LL_parser" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">LL(1)</a>
+              <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">RPN</a>
+              <a href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form" target="_blank" rel="noopener noreferrer" class="text-[13px] font-mono text-on-surface-variant/80 border border-outline/40 px-2.5 py-1.5 hover:text-primary-container hover:border-primary-container transition-colors duration-150">BNF</a>
+            </div>
+          </article>
+
         </div>
       </section>
 
