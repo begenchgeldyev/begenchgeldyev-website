@@ -1,7 +1,9 @@
 import { canAccess, enforce, resolveEmail } from '@bg/core/abac/pep';
+import { container } from './app-container';
+import { resolveLang } from './i18n';
+import { handleLangRequest } from './lang-route';
 import { ProjectController } from './project/project.controller';
 import { renderPage, servePublicAsset } from './site';
-import { container } from './app-container';
 
 const PORT = Number(process.env.PORT) || 8613;
 
@@ -40,6 +42,9 @@ Bun.serve({
           return Response.json({ ok: true }, { headers: { 'Set-Cookie': cookie } });
         },
       },
+      '/lang': {
+        POST: (req: Request) => handleLangRequest(req),
+      },
       '/auth/logout': {
         POST: () => {
           const cookie = `dev-user-email=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`;
@@ -77,7 +82,7 @@ Bun.serve({
       return container.resolve(ProjectController).getPageById(req, Number(projectDetailMatch[1]));
     }
 
-    const page = await renderPage(pathname, resolveEmail(req));
+    const page = await renderPage(pathname, resolveLang(req), resolveEmail(req));
     if (page) {
       return page;
     }

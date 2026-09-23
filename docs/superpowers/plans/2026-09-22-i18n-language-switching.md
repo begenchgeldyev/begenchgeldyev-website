@@ -34,6 +34,12 @@
 
   `bun install` has already been run; `node_modules` exists.
 
+- **Typecheck baseline.** `bunx tsc --noEmit -p apps/site/tsconfig.json` also **does not exit 0 on a clean checkout**. Three pre-existing errors:
+  - `apps/site/server.ts(27,22)` — `Parameter 'req' implicitly has an 'any' type` (in the `/api/auth/login` handler).
+  - `packages/core/abac/pep.ts(37,5)` and `(62,7)` — the `Policy` type declares `contextContidition`, a typo for `contextCondition`, so the DB row never satisfies it.
+
+  These are out of scope; do not fix them. Your gate is that tsc reports **no error whose path is a file your task created or modified**. Read the output, filter to your files, and judge only those.
+
 ---
 
 ### Task 1: i18n module — language resolution and string table

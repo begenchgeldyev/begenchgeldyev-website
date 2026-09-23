@@ -1,4 +1,5 @@
-import { canAccess, resolveEmail, Injectable, type ProjectsRepository } from '@bg/core';
+import { canAccess, Injectable, type ProjectsRepository, resolveEmail } from '@bg/core';
+import { type Lang, resolveLang, t } from '../i18n';
 import { renderComponentTemplate, renderDocument } from '../site';
 
 type ProjectRecord = Awaited<ReturnType<ProjectsRepository['list']>>[number];
@@ -7,12 +8,12 @@ function escapeHtml(value: string) {
   return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 }
 
-function formatProjectDate(value: Date | null) {
+function formatProjectDate(value: Date | null, lang: Lang) {
   if (!value) {
-    return 'Unknown';
+    return t(lang, 'dateUnknown');
   }
 
-  return new Intl.DateTimeFormat('en', {
+  return new Intl.DateTimeFormat(t(lang, 'dateLocale'), {
     year: 'numeric',
     month: 'short',
     day: '2-digit',
@@ -39,10 +40,10 @@ async function renderContentHtml(value: string | null) {
   return content;
 }
 
-async function renderProjectCard(project: ProjectRecord, index: number) {
+async function renderProjectCard(project: ProjectRecord, index: number, lang: Lang) {
   const accent = String(index + 1).padStart(2, '0');
-  const description = project.description?.trim() || 'No short description provided.';
-  const content = stripHtml(project.content?.trim() || 'No detailed notes attached yet.');
+  const description = project.description?.trim() || t(lang, 'projectNoDescription');
+  const content = stripHtml(project.content?.trim() || t(lang, 'projectNoContent'));
   const image = project.image?.trim();
   const imageBlock = image
     ? `<div class="border-b border-outline-variant/20 bg-surface overflow-hidden">
@@ -51,11 +52,11 @@ async function renderProjectCard(project: ProjectRecord, index: number) {
     : '';
   const name = escapeHtml(project.name);
   const projectPath = escapeHtml(project.name.toLowerCase().replaceAll(/\s+/g, '-'));
-  const visibility = project.isHidden ? 'Hidden' : 'Published';
+  const visibility = project.isHidden ? t(lang, 'visibilityHidden') : t(lang, 'visibilityPublished');
   return renderComponentTemplate('project-card.html', {
     accent,
     content: escapeHtml(content),
-    createdAt: escapeHtml(formatProjectDate(project.createdAt)),
+    createdAt: escapeHtml(formatProjectDate(project.createdAt, lang)),
     description: escapeHtml(description),
     imageBlock,
     projectHref: `/projects/${project.id}`,
@@ -65,12 +66,12 @@ async function renderProjectCard(project: ProjectRecord, index: number) {
   });
 }
 
-async function renderProjectsFragment(projects: ProjectRecord[]) {
+async function renderProjectsFragment(projects: ProjectRecord[], lang: Lang) {
   if (projects.length === 0) {
     return renderComponentTemplate('projects/empty-state.html');
   }
 
-  return (await Promise.all(projects.map(renderProjectCard))).join('');
+  return (await Promise.all(projects.map((project, index) => renderProjectCard(project, index, lang)))).join('');
 }
 
 async function renderProjectEditor() {
@@ -94,11 +95,12 @@ async function renderProjectEditorScript(project: ProjectRecord) {
 }
 
 async function renderProjectPage(req: Request, project: ProjectRecord, canEdit: boolean) {
-  const description = project.description?.trim() || 'No short description provided.';
+  const lang = resolveLang(req);
+  const description = project.description?.trim() || t(lang, 'projectNoDescription');
   const image = project.image?.trim();
-  const createdAt = formatProjectDate(project.createdAt);
-  const updatedAt = formatProjectDate(project.updatedAt);
-  const visibility = project.isHidden ? 'Hidden' : 'Published';
+  const createdAt = formatProjectDate(project.createdAt, lang);
+  const updatedAt = formatProjectDate(project.updatedAt, lang);
+  const visibility = project.isHidden ? t(lang, 'visibilityHidden') : t(lang, 'visibilityPublished');
   const adminControls = canEdit
     ? `<div class="space-y-3 border border-primary-container/30 bg-primary-container/5 p-4">
         <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-primary-container">[ADMIN]</div>
@@ -133,12 +135,8 @@ async function renderProjectPage(req: Request, project: ProjectRecord, canEdit: 
     createdAt: escapeHtml(createdAt),
     description: escapeHtml(description),
     editor: canEdit ? `${await renderProjectEditor()}${await renderProjectEditorScript(project)}` : '',
-    headerEditableAttrs: canEdit
-      ? 'data-admin-editable="header"'
-      : '',
-    contentEditableAttrs: canEdit
-      ? 'data-admin-editable="content"'
-      : '',
+    headerEditableAttrs: canEdit ? 'data-admin-editable="header"' : '',
+    contentEditableAttrs: canEdit ? 'data-admin-editable="content"' : '',
     imageBlock,
     projectId: String(project.id),
     projectName: escapeHtml(project.name),
@@ -147,10 +145,12 @@ async function renderProjectPage(req: Request, project: ProjectRecord, canEdit: 
     visibility: escapeHtml(visibility),
   });
 
+  const projectTitle = `${project.name.toUpperCase()} — BEGENCH_GELDYEV@ROOT:~$`;
+
   return new Response(
     await renderDocument(
       {
-        title: `${project.name.toUpperCase()} — BEGENCH_GELDYEV@ROOT:~$`,
+        title: { en: projectTitle, ru: projectTitle },
         fragmentFile: 'projects.html',
         activeNav: 'projects',
         brandIsLink: true,
@@ -158,6 +158,7 @@ async function renderProjectPage(req: Request, project: ProjectRecord, canEdit: 
         showTerminalIcon: true,
       },
       contentHtml,
+      lang,
       resolveEmail(req),
     ),
     {
@@ -201,7 +202,7 @@ export class ProjectController {
   async get(req: Request) {
     const items = await this.projectsRepository.list();
     if (req.headers.get('HX-Request') === 'true') {
-      return new Response(await renderProjectsFragment(items), {
+      return new Response(await renderProjectsFragment(items, resolveLang(req)), {
         headers: { 'Content-Type': 'text/html; charset=utf-8' },
       });
     }

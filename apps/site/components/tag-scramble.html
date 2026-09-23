@@ -1,0 +1,48 @@
+<script>
+  (() => {
+    const chars = '!<>-_\\/[]{}—=+*^?#________';
+    const tags = document.querySelectorAll('a[class*="border-outline"]');
+    tags.forEach((el) => {
+      const original = el.textContent;
+      let frame = 0;
+      let raf = 0;
+      let queue = [];
+
+      const scramble = () => {
+        cancelAnimationFrame(raf);
+        frame = 0;
+        queue = [];
+        for (let i = 0; i < original.length; i++) {
+          const start = Math.floor(Math.random() * 8);
+          const end = start + Math.floor(Math.random() * 8) + 4;
+          queue.push({ from: original[i], to: original[i], start, end });
+        }
+        const tick = () => {
+          let output = '';
+          let complete = 0;
+          for (let i = 0; i < queue.length; i++) {
+            const { from, to, start, end } = queue[i];
+            if (frame >= end) {
+              complete++;
+              output += to;
+            } else if (frame >= start) {
+              output += chars[Math.floor(Math.random() * chars.length)];
+            } else {
+              output += from;
+            }
+          }
+          el.textContent = output;
+          if (complete < queue.length) {
+            raf = requestAnimationFrame(tick);
+            frame++;
+          } else {
+            el.textContent = original;
+          }
+        };
+        tick();
+      };
+
+      el.addEventListener('mouseenter', scramble);
+    });
+  })();
+</script>
