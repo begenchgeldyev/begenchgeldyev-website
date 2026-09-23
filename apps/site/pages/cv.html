@@ -161,7 +161,7 @@
               A framework that runs ARM64 builds inside a gem5 full-system simulation on ordinary x86_64 CI agents, so cross-architecture builds need neither ARM hardware nor cloud instances.
             </p>
             <ul class="text-white/90 text-base leading-relaxed list-disc list-outside pl-5 space-y-2.5 max-w-[72ch] mb-5">
-              <li>Boots a full Debian ARM64 guest under gem5 and drives it from Python: the environment is declared in YAML, an orchestrator owns the simulation lifecycle, and artifacts move over SSH. Binaries it produced were verified on real Raspberry Pi 4 hardware.</li>
+              <li>Boots a full Debian ARM64 guest under gem5 and drives it from Python: the environment is declared in YAML, an orchestrator owns the simulation lifecycle, and artifacts move over SSH.</li>
               <li>The guest is split across two disks — an immutable 2 GB base and a 4 GB build overlay mounted into a chroot — so toolchain updates never touch the base image and builds stay reproducible.</li>
               <li>Cut cycle time by 40%, from 14.6 to 8.7 minutes, by restoring gem5 checkpoints instead of cold-booting (382 s to 28 s); ccache inside the chroot took another 30–50% off incremental builds.</li>
               <li>Shipped as a Jenkins Shared Library, so a pipeline calls one declarative step. A month of operation logged 147 ARM64 builds at a 94.2% success rate.</li>
