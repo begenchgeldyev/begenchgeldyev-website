@@ -1,60 +1,52 @@
 import { canAccess, enforce, resolveEmail } from '@bg/core/abac/pep';
 import { container } from './app-container';
+import { CONFIG } from './config';
 import { resolveLang } from './i18n';
 import { handleLangRequest } from './lang-route';
 import { ProjectController } from './project/project.controller';
 import { renderPage, servePublicAsset } from './site';
 
-const PORT = Number(process.env.PORT) || 8613;
-
-function withPrefix<T>(prefix: string, routes: Record<string, T>): Record<string, T> {
-  return Object.fromEntries(Object.entries(routes).map(([path, handler]) => [`${prefix}${path}`, handler]));
-}
-
 Bun.serve({
-  port: PORT,
-  routes: Object.assign(
-    withPrefix('/api', {
-      '/version': () => Response.json({ sha: process.env.GIT_SHA ?? 'unknown' }),
-      '/title': () => {
-        const title = ['Javascript Ninja', 'VIM enjoyer', 'Software Engineer', 'Fullstack Developer'];
-        const randomTitleIndex = Math.floor(Math.random() * title.length);
-        const randomTitle = title.at(randomTitleIndex);
-        return Response.json({ title: randomTitle });
+  port: CONFIG.PORT,
+  routes: {
+    '/api/version': () => Response.json({ sha: process.env.GIT_SHA ?? 'unknown' }),
+    '/api/title': () => {
+      const title = ['Javascript Ninja', 'VIM enjoyer', 'Software Engineer', 'Fullstack Developer'];
+      const randomTitleIndex = Math.floor(Math.random() * title.length);
+      const randomTitle = title.at(randomTitleIndex);
+      return Response.json({ title: randomTitle });
+    },
+    '/api/projects': {
+      GET: (req) => container.resolve(ProjectController).get(req),
+      POST: enforce((req) => container.resolve(ProjectController).post(req), { actions: 'create', resource: 'project' }),
+    },
+    '/api/auth/login': {
+      POST: async (req) => {
+        let body: { secret?: string; email?: string } = {};
+        try {
+          body = (await req.json()) as typeof body;
+        } catch {
+          /* ignore */
+        }
+        const secret = process.env.ADMIN_SECRET;
+        if (!secret || body.secret !== secret) {
+          return Response.json({ error: 'Forbidden' }, { status: 403 });
+        }
+        const email = body.email ?? 'begenchgeldyev@gmail.com';
+        const cookie = `dev-user-email=${encodeURIComponent(email)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`;
+        return Response.json({ ok: true }, { headers: { 'Set-Cookie': cookie } });
       },
-      '/projects': {
-        GET: (req) => container.resolve(ProjectController).get(req),
-        POST: enforce((req) => container.resolve(ProjectController).post(req), { actions: 'create', resource: 'project' }),
+    },
+    '/api/lang': {
+      POST: (req: Request) => handleLangRequest(req),
+    },
+    '/api/auth/logout': {
+      POST: () => {
+        const cookie = `dev-user-email=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`;
+        return Response.json({ ok: true }, { headers: { 'Set-Cookie': cookie } });
       },
-      '/auth/login': {
-        POST: async (req) => {
-          let body: { secret?: string; email?: string } = {};
-          try {
-            body = await req.json();
-          } catch {
-            /* ignore */
-          }
-          const secret = process.env.ADMIN_SECRET;
-          if (!secret || body.secret !== secret) {
-            return Response.json({ error: 'Forbidden' }, { status: 403 });
-          }
-          const email = body.email ?? 'begenchgeldyev@gmail.com';
-          const cookie = `dev-user-email=${encodeURIComponent(email)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`;
-          return Response.json({ ok: true }, { headers: { 'Set-Cookie': cookie } });
-        },
-      },
-      '/lang': {
-        POST: (req: Request) => handleLangRequest(req),
-      },
-      '/auth/logout': {
-        POST: () => {
-          const cookie = `dev-user-email=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`;
-          return Response.json({ ok: true }, { headers: { 'Set-Cookie': cookie } });
-        },
-      },
-    }),
-    {},
-  ),
+    },
+  },
 
   async fetch(req) {
     const { pathname } = new URL(req.url);
@@ -91,5 +83,3 @@ Bun.serve({
     return new Response('Not Found', { status: 404 });
   },
 });
-
-console.log(`Server running at http://localhost:${PORT}`);
