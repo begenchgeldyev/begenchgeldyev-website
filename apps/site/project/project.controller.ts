@@ -212,7 +212,7 @@ export class ProjectController {
 
   async post(req: Request) {
     const parsed = await parseProjectPayload(req);
-    if ('error' in parsed) {
+    if (parsed.error) {
       return parsed.error;
     }
 
@@ -225,7 +225,7 @@ export class ProjectController {
 
   async patch(req: Request, id: number) {
     const parsed = await parseProjectPayload(req);
-    if ('error' in parsed) {
+    if (parsed.error) {
       return parsed.error;
     }
 
